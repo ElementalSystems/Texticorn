@@ -1,0 +1,22 @@
+{
+  "name": "textgames",
+  "version": "1.0.0",
+  "description": "Some text display utils",
+  "main": "index.js",
+  "scripts": {
+    "serve": "live-server . --host=localhost --port=8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElementalSystems/TextGames.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bestzip": "^2.2.1",
+    "html-minifier-terser": "^7.2.0",
+    "live-server": "^1.2.0",
+    "terser": "^5.44.0"
+  }
+}
