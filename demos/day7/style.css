@@ -1,0 +1,192 @@
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+@property --viewY {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@property --viewX {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+@property --viewS {
+  syntax: "<number>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.scene {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  box-sizing: border-box;
+  perspective: 800px;
+  background-color: #090;
+  transform-style: preserve-3d;
+  --viewX: 0;
+  --viewY: 0;
+  --viewS: 1;
+  transition:
+    --viewX 1s ease,
+    --viewY 1s,
+    --viewS 3s;
+  transform: translate3d(
+      calc(var(--viewX, 0) * 1rem),
+      calc(var(--viewY, 0) * 1rem),
+      0rem
+    )
+    scale3d(var(--viewS, 1), var(--viewS, 1), var(--viewS, 1));
+  animationx: viewRotate 10s ease-in-out infinite alternate;
+}
+
+.scene * {
+  transform-style: preserve-3d;
+}
+
+@keyframes viewRotate {
+  0% {
+    --viewY: 0;
+    --viewX: 0;
+  }
+  100% {
+    --viewY: -20;
+    --viewX: -50;
+  }
+}
+
+.map {
+  font-size: 20rem;
+  line-height: 1.1;
+  --zHeight: 5rem;
+  background-color: #0884;
+  --dct: #0ff;
+  --dcb: #044;
+  position: relative;
+
+  --gridX: calc(1ch * 1);
+  --gridY: calc(1em * 1.1 / 2);
+  --gridXO: calc(var(--gridX) / 2);
+  background-size: var(--gridX) var(--gridY);
+
+  font-variant-numeric: tabular-nums;
+  text-rendering: geometricPrecision;
+
+  /* Pin both layers directly to the top-left edge of the box */
+  background-position: var(--gridXO) 0;
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.15) 2px, transparent 2px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 2px, transparent 2px);
+
+  .ga {
+    width: 0.05em;
+    height: 0.05em;
+
+    border-radius: 0 50% 50% 50%;
+    top: calc(var(--gridY) / 2);
+    left: var(--gridXO);
+    background-color: #0ff5;
+    position: absolute;
+    transform: translate3d(
+      calc(var(--gX, 0) * var(--gridX) + var(--gridXO)),
+      calc(var(--gY, 0) * var(--gridY)),
+      calc(var(--zHeight, 0) / 2)
+    );
+
+    .sprite {
+      transform: rotateZ(calc(var(--gRZ, 0) * -90deg))
+        rotateY(calc(var(--gRY, 0) * 180deg));
+    }
+
+    .marker {
+      font-size: 2rem;
+    }
+  }
+}
+
+.map > .base {
+  text-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+}
+
+.map .dlayer {
+  text-shadow: none;
+}
+
+pre {
+  margin: 0;
+  padding: 0;
+  margin-block: 0;
+}
+
+.base {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.dlayer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translate3d(
+    0,
+    0,
+    calc(var(--i, 0) * var(--zHeight, 1em) + var(--zOffset, 0em))
+  );
+  color: color-mix(
+    in oklch,
+    var(--dct, currentcolor) calc((var(--i, 0)) * 100%),
+    var(--dcb, #000)
+  );
+}
+
+.dlayer.AB {
+  color: color-mix(
+    in oklch,
+    var(--dct, currentcolor) calc((1 - abs(var(--i, 0))) * 100%),
+    transparent
+  );
+  transform: translate3d(
+      0,
+      0,
+      calc(var(--i, 0) * var(--zHeight, 1em) + var(--zOffset, 0em))
+    )
+    scale(calc(1 - 0.2 * abs(var(--i, 0))));
+}
+
+.letter {
+  position: absolute;
+  transform: translate3d(
+      calc(var(--letX, 0) - (1ch / 2)),
+      calc(var(--letY, 0) - (1lh / 2)),
+      var(--letZ, 0)
+    )
+    rotateZ(var(--letRZ, 0)) scale3d(1, var(--letHS, 1), 1);
+  borderx: 2px solid #0003;
+}
+
+.uni {
+  font-family: Modern;
+  --zHeight: 1rem;
+  font-size: 1rem;
+  --dct: #008;
+  color: #008;
+
+  .limb {
+    --dctx: #a00;
+    colorx: #a00;
+  }
+  .bd {
+    font-size: 2.5rem;
+  }
+  .head {
+    font-size: 1.5rem;
+  }
+}
