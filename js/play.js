@@ -14,6 +14,7 @@ const followSp = (sp, map) => {
  *
  *
  *  Sprite:
+ *    jump up / duck down (1)
  *    calc future position at start of move from last move bit
  *    z-offset on legs
  *    Create reverse legs?
@@ -32,7 +33,12 @@ async function start() {
 
     await t.move("fd");
     await t.move("fd");
-    await t.move("jf");
+    await t.move("dd");
+    await t.move("tb");
+    await t.move("fd");
+    await t.move("tb");
+    await t.move("ju");
+
     await t.move("rd");
     await t.move("fd");
     await t.move("tb");
