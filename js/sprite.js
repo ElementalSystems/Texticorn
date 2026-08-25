@@ -1,7 +1,9 @@
 const addSprite = (c, map, gx = 0, gy = 0, rz = 0, is = 0, next) => {
   const ctl = document.createElement("div");
   ctl.classList.add(c.style, "sprite");
-  const bits = c.bits.map((b) => mkAnimatedCurve(b, ctl, is));
+  const bits = c.bits.map((b) =>
+    mkAnimatedCurve(b, ctl, c.bits[0].pos.length, is),
+  );
   sp = {
     ctl,
     bits,
@@ -59,10 +61,15 @@ const addSprite = (c, map, gx = 0, gy = 0, rz = 0, is = 0, next) => {
     async start() {
       console.log("Started");
       while (await this.move(next?.(this)));
+      console.log("ended");
     },
     async move(mn) {
       if (!mn) return false;
-      //TODO: calc future co-ordinates for action buttons
+      //TODO: calc future co-ordinates for action buttons????
+      this.cgx = this.gx;
+      this.cgy = this.gy;
+      this.crz = this.rz;
+      this.cry = this.ry;
       for (const bit of this.moves[mn]) await this.moveBit(bit);
       //update currents to last position
       this.cgx = this.gx;
@@ -128,4 +135,6 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
 const spriteFromCode = (c, map, ctl, x = 0, y = 0, rz = 0) =>
   ({
     "@": () => addUni(map, ctl, x, y, rz),
+    "#": () => addSprite(prz, map, x, y, rz, 0, () => "i"), //Makes a prz that does the idle motion
+    "^": () => addSprite(ext, map, x, y, rz, 0, () => "i"), //Makes an exit that does the idle motion
   })[c]?.();

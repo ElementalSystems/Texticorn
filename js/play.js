@@ -1,75 +1,44 @@
 //Stuff worth doing
 /*
- *  config for sprite design (1)
+ *  design
+ *    * more unicorn
  *
  *  other objects
- *     - Prizes
  *     - Bridges
- *     - Exit!
  *
  *  Map
  *   * fix android issue!
+ *   * work the curves system better for inversions (1)
  *
  *  Sprite:
- *    interuptable idle?
- *    calc future position at start of move from last move bit???
  *    z-offset on legs
- *    Create reverse legs?
- *    speech bubble
+ *    speech bubble (control the curve text - no layers)
  */
 
 async function start() {
   const controls = mkCtls(document.getElementById("ctls"));
-  play(controls);
-  //let t = addUni(map, controls, 1, 10);
-  //map.setCameraFollow(t);
-  /*
-  while (true) {
-    await t.move("fd");
-    map.base.style.setProperty("--viewS", 0.25);
+  play(map1, controls);
 
-    await t.move("fd");
-    await t.move("fd");
-    await t.move("dd");
-    await t.move("tb");
-    await t.move("fd");
-    await t.move("tb");
-    await t.move("ju");
+  //showSprite(ext, "i");
+}
 
-    await t.move("rd");
-    await t.move("fd");
-    await t.move("tb");
-    await t.move("fd");
-    await t.move("jf");
-    await t.move("fd");
-    await t.move("tb");
-    await t.move("fd");
-    await t.move("rd");
-    await t.move("fd");
-    await t.move("fd");
-    await t.move("jf");
+function play(mapC, controls) {
+  const map = mkMap(mapC, controls, document.getElementById("scene"));
+  //map.base.style.setProperty("--viewS", 0.25);
+  addGridDisplay(map);
+}
 
-    //map.base.style.setProperty("--viewS", 0.5);
-    //map.base.style.setProperty("--viewY", 5);
-    //map.base.style.setProperty("--viewX", 5);
-    //map.base.style.setProperty("--viewS", 2);
-    await t.move("fd");
-    await t.move("ru");
-    await t.move("fd");
-    await t.move("ru");
-    //map.base.style.setProperty("--viewY", 10);
-    //map.base.style.setProperty("--viewX", 10);
-    //map.base.style.setProperty("--viewS", 0.5);
+//HACK: Design time code only - remove
+async function showSprite(config, mn) {
+  const map = mkMap(mapD, null, document.getElementById("scene"));
+  addGridDisplay(map);
+  map.setCamera(3, 3, 0);
+  config.bits[0].pos.forEach((_, i) => addSprite(config, map, i + 1, 2, 0, i));
+  if (mn) {
+    let t = addSprite(config, map, 1, 4);
+    while (true) {
+      t.setP(1, 4, 100, 0);
+      await t.move(mn);
+    }
   }
-    */
-}
-
-function play(controls) {
-  const map = mkMap(map1, controls, document.getElementById("scene"));
-  addGridDisplay(map);
-}
-
-function showSprite() {
-  const map = mkMap(mapD, controls, document.getElementById("scene"));
-  addGridDisplay(map);
 }

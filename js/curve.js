@@ -33,8 +33,8 @@ const updateCurveLetterPos = (el, t, [x1, y1, x2, y2, x3, y3, w1, w2, w3]) => {
   el.style.setProperty("--letHS", w);
 };
 
-const mkAnimatedCurve = (c, parentEl, is = 0) => {
-  c.pos.forEach((a) => fillFrom(c.pos[0], a)); //fill in extra pos numbers if we have to
+const mkAnimatedCurve = (c, parentEl, numPos, is = 0) => {
+  fillUp(c.pos, numPos, []).forEach((a) => fillFrom(c.pos[0], a)); //fill in extra pos numbers if we have to
   const ctl = document.createElement("div");
   ctl.classList.add(c.style);
   parentEl?.appendChild(ctl);

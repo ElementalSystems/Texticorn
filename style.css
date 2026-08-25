@@ -191,6 +191,20 @@ pre {
   }
 }
 
+.prz {
+  --zHeight: 1rem;
+  font-size: 2rem;
+  --dct: #f08;
+  color: #008;
+}
+
+.ext {
+  --zHeight: 0.5rem;
+  font-size: 2rem;
+  --dct: #f44;
+  color: #fff;
+}
+
 #ctls {
   position: absolute;
   bottom: 0.25rem;

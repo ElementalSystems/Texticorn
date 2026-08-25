@@ -1,22 +1,23 @@
 const mkMap = (text, ctls, parentEl, layers = 10) => {
   const base = document.createElement("pre");
   base.classList.add("map");
-  base.textContent = text.replace(/@/g, "─");
+  base.textContent = text.replace(/[\^@#]/g, "─");
   parentEl.appendChild(base);
   const map = {
     base,
     scene: parentEl,
     grid: mkGrid(text),
     layers: buildDepth(base, layers),
+    follow: null,
 
     g_state(x, y) {
       return this.grid[y][x];
     },
     g_solid(x, y) {
-      return this.g_state(x, y) == 1;
+      return this.g_state(x, y) & 1;
     },
     g_stick(x, y) {
-      return this.g_state(x, y) == 2;
+      return this.g_state(x, y) & 2;
     },
 
     addA(content, gx, gy) {
@@ -38,9 +39,10 @@ const mkMap = (text, ctls, parentEl, layers = 10) => {
       this.base.style.setProperty("--viewRZ", rz);
     },
     setCameraFollow(sp) {
+      this.follow = sp;
       eachFrame(() => {
         this.setCamera(sp.gx, sp.gy, sp.rz);
-        return true;
+        return this.follow;
       });
     },
   };
@@ -64,7 +66,7 @@ const mkGrid = (text) => {
     [],
   );
   const mks = (x, y) => {
-    if (grid[y][x] == 0) grid[y][x] = 2;
+    grid[y][x] |= 2;
   };
   lines.forEach((l, y) =>
     [...l].forEach((c, x) => {

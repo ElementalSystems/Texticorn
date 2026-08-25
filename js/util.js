@@ -12,6 +12,7 @@ const inter = (r, st, end, func = id) => {
 
 //array handling
 const fillFrom = (s, t) => s.forEach((v, i) => (t[i] = t[i] ?? s[i]));
+const fillUp = (arr, x, y) => Array.from({length: x}, (_, i) => arr[i] ?? y);
 const interA = (r, st, end, func) =>
   st.map((_, i) => inter(r, st[i], end[i], func)); //like inter across each element in an array
 
