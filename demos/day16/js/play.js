@@ -1,6 +1,6 @@
 //TODO: The List
 /*
- * Design
+ *  design
  *    * Level design
  *        * 1 - Intro Jumps and controls and curves - prizes and exit (2)
  *        * 2 - The flip side and the solid transforms
@@ -8,11 +8,7 @@
  *    * more unicorn
  *
  *
- * Map
- *
- * Technical
- *   * build dist
- *   * zip and size
+ * map
  *
  *
  * game

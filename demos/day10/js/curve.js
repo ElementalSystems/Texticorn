@@ -56,9 +56,7 @@ const mkAnimatedCurve = (c, parentEl, is = 0) => {
       this.position(interA(r, this.pos[os], this.pos[ns], func));
     },
   };
-  //console.log("here");
   if (c.layers) {
-    console.log("gotone ", curve);
     curve.letters.forEach((l) => buildA_B(l, c.layers));
   }
   curve.position(curve.pos[is]);
