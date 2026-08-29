@@ -1,13 +1,13 @@
 const mkMap = (text, ctls, parentEl, layers = 5) => {
   const base = document.createElement("pre");
   base.classList.add("map");
-  base.textContent = text.replace(/[\^(@#]/g, "─");
   parentEl.appendChild(base);
   const map = {
     base,
     scene: parentEl,
     grid: mkGrid(text),
-    layers: buildDepth(base, layers),
+    gCols: mkWalls(base, text),
+    //layers: buildDepth(base, layers),
     follow: null,
 
     g_state(x, y) {
@@ -51,6 +51,25 @@ const mkMap = (text, ctls, parentEl, layers = 5) => {
   };
   addSprites(map, ctls, text);
   return map;
+};
+
+const mkWalls = (base, text) => {
+  const lines = text.replace(/[\^(@#]/g, "─").split("\n");
+  const numCols = Math.max(...lines.map((l) => l.length));
+  const w = [];
+
+  //for each column create an element
+  for (c = 0; c < numCols; c += 1) {
+    const e = document.createElement("div");
+    e.classList.add("wall");
+    e.textContent = lines.map((l) => l[c] ?? " ").join("\n");
+    base.appendChild(e);
+    e.style.setProperty("--col", c);
+    buildDepth(e, 5);
+    w.push(e);
+  }
+
+  return w;
 };
 
 const mkGridRow = (l, top) => {

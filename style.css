@@ -29,7 +29,7 @@ body {
   position: absolute;
   box-sizing: border-box;
   perspective: 800px;
-  background-color: #090;
+  background-colorx: #090;
   transform-style: preserve-3d;
   animationx: viewRotate 10s ease-in-out infinite alternate;
 }
@@ -52,6 +52,8 @@ body {
 .map {
   font-size: 20rem;
   line-height: 1.1;
+  width: 1000vw;
+  height: 1000vh;
   --zHeight: 5rem;
   background-color: #0884;
   --dct: #0ff;
@@ -69,7 +71,7 @@ body {
   --viewS: 0.5;
   transition: --viewS 2s;
   transform-origin: left top;
-  width: max-content;
+
   min-width: 100%;
   transform: translate3d(50vw, 50vh, 0) rotateZ(calc(var(--viewRZ) * 90deg))
     scale3d(var(--viewS, 1), var(--viewS, 1), 1)
@@ -108,6 +110,13 @@ body {
     .marker {
       font-size: 1rem;
     }
+  }
+
+  .wall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(calc(var(--col, 0) * var(--gridX)));
   }
 }
 
