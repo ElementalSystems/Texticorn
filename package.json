@@ -4,7 +4,9 @@
   "description": "Some text display utils",
   "main": "index.js",
   "scripts": {
-    "serve": "live-server . --host=localhost --port=8080"
+    "serve": "live-server . --host=localhost --port=8080",
+    "compress": "html-minifier-terser index_dist.html -o dist/index.html  --collapse-whitespace --remove-comments --remove-redundant-attributes --remove-empty-attributes --remove-optional-tags --minify-js true --minify-css true&&terser ./js/*.js  --compress --mangle -o ./dist/index.js&&css-minify -d ./ -o ./dist",
+    "zip": "cd dist && bestzip ../release/final.zip *"
   },
   "repository": {
     "type": "git",
@@ -17,6 +19,7 @@
     "bestzip": "^2.2.1",
     "html-minifier-terser": "^7.2.0",
     "live-server": "^1.2.0",
-    "terser": "^5.44.0"
+    "terser": "^5.44.0",
+    "css-minify": "^2.1.0"
   }
 }

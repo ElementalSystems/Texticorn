@@ -1,18 +1,20 @@
 //TODO: The List
 /*
  * Design
- *    * Level design
- *        * 1 - Intro Jumps and controls and curves - prizes and exit (2)
- *        * 2 - The flip side and the solid transforms
+ *  * Level design
+ *    * 1 - Intro Jumps and controls and curves - prizes and exit
+ *    * 2 - The flip side and the solid bits
  *
- *    * more unicorn
- *
+ *  * more unicorn
+ *   * Decide on frame definitions: (1)
+ *       * back crouch, streched out, streched out (A), front crouch, walk, streched out, streched out (A), hunched together
+ *   * Get moves to look good (and check empty spaces)
  *
  * Map
  *
- * Technical
- *   * build dist
- *   * zip and size
+ * Technical]
+ *    allow limb offset f and r classes
+ *  * arch 3d thing (4)
  *
  *
  * game
@@ -26,10 +28,10 @@
  */
 
 async function start() {
-  const controls = mkCtls(document.getElementById("ctls"));
-  play(myMap, controls);
+  //const controls = mkCtls(document.getElementById("ctls"));
+  //play(myMap, controls);
 
-  //showSprite(brg, "i");
+  showSprite(uni, "i");
 }
 
 function play(mapC, controls) {
@@ -41,7 +43,9 @@ function play(mapC, controls) {
 //HACK: Design time code only - remove
 async function showSprite(config, mn) {
   const map = mkMap(mapD, null, document.getElementById("scene"));
-  addGridDisplay(map);
+  //addGridDisplay(map);
+  map.base.style.setProperty("--viewS", 1);
+
   map.setCamera(3, 3, 0);
   config.bits[0].pos.forEach((_, i) => addSprite(config, map, i + 1, 2, 0, i));
   if (mn) {
