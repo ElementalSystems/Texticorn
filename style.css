@@ -5,6 +5,64 @@ body {
   overflow: hidden;
 }
 
+.scene {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  box-sizing: border-box;
+  perspective: 800px;
+  background: transparent;
+  transform-style: preserve-3d;
+  animationx: viewRotate 10s ease-in-out infinite alternate;
+}
+
+.scene * {
+  transform-style: preserve-3d;
+}
+
+.menu {
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+
+  background: linear-gradient(
+    to bottom,
+    #000 0%,
+    #f00 5%,
+    #f00 16%,
+    #ff7f00 19%,
+    #ff7f00 29%,
+    #ff0 32%,
+    #ff0 42%,
+    #0f0 45%,
+    #0f0 55%,
+    #00f 58%,
+    #00f 68%,
+    #4b0082 71%,
+    #4b0082 81%,
+    #8f00ff 84%,
+    #8f00ff 94%,
+    #000 100%
+  );
+
+  .lev {
+    background: #fff5;
+    text-align: center;
+    width: 50vw;
+    font-size: 5vh;
+    border-radius: 10vh;
+    padding: 1vh;
+    font-family: Modern;
+    cursor: pointer;
+  }
+}
+
 @property --viewY {
   syntax: "<number>";
   initial-value: 0;
@@ -21,21 +79,6 @@ body {
   syntax: "<number>";
   initial-value: 0;
   inherits: false;
-}
-
-.scene {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  box-sizing: border-box;
-  perspective: 800px;
-  background-colorx: #090;
-  transform-style: preserve-3d;
-  animationx: viewRotate 10s ease-in-out infinite alternate;
-}
-
-.scene * {
-  transform-style: preserve-3d;
 }
 
 @keyframes viewRotate {
