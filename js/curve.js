@@ -5,6 +5,7 @@ const makeLetters = (el, text, cb) => {
     const s = document.createElement("div");
     s.classList.add("letter");
     s.style.setProperty("--li", i);
+    s.style.setProperty("--lir", i / (letters.length - 1));
     s.textContent = letter;
     el.appendChild(s);
     cb?.(s, letter, i, letters.length);

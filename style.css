@@ -21,6 +21,10 @@ body {
 }
 
 .menu {
+  &.hide {
+    display: none;
+  }
+
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
@@ -31,28 +35,45 @@ body {
   padding-top: 5vh;
   padding-bottom: 5vh;
 
+  --cR: #f00;
+  --cO: #ff7f00;
+  --cY: #ff0;
+  --cG: #0f0;
+  --cB: #00f;
+  --cI: #4b0082;
+  --cV: #8f00ff;
+
+  --cR: #800000;
+  --cO: #994000;
+  --cY: #808000;
+  --cG: #008000;
+  --cB: #000080;
+  --cI: #2a004a;
+  --cV: #4a006a;
+
   background: linear-gradient(
     to bottom,
     #000 0%,
-    #f00 5%,
-    #f00 16%,
-    #ff7f00 19%,
-    #ff7f00 29%,
-    #ff0 32%,
-    #ff0 42%,
-    #0f0 45%,
-    #0f0 55%,
-    #00f 58%,
-    #00f 68%,
-    #4b0082 71%,
-    #4b0082 81%,
-    #8f00ff 84%,
-    #8f00ff 94%,
+    var(--cR) 5%,
+    var(--cR) 16%,
+    var(--cO) 19%,
+    var(--cO) 29%,
+    var(--cY) 32%,
+    var(--cY) 42%,
+    var(--cG) 45%,
+    var(--cG) 55%,
+    var(--cB) 58%,
+    var(--cB) 68%,
+    var(--cI) 71%,
+    var(--cI) 81%,
+    var(--cV) 84%,
+    var(--cV) 94%,
     #000 100%
   );
 
   .lev {
-    background: #fff5;
+    box-shadow: inset 0 0 1em 0 #000a;
+    color: #fff;
     text-align: center;
     width: 50vw;
     font-size: 5vh;

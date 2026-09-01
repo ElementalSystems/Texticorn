@@ -1,67 +1,3 @@
-//Levels
-
-const levs = [
-  {
-    map: myMap,
-    //set colours?
-    title: "RED - INTRO",
-    time4: 30,
-    time5: 18,
-  },
-  {
-    map: myMap,
-    //set colours?
-    title: "ORANGE - INTRO",
-    time4: 30,
-    time5: 18,
-  },
-  {
-    map: myMap,
-    //set colours?
-    title: "Yellow - INTRO",
-    time4: 30,
-    time5: 18,
-  },
-  {
-    map: myMap,
-    //set colours?
-    title: "green - INTRO",
-    time4: 30,
-    time5: 18,
-  },
-  {
-    map: myMap,
-    //set colours?
-    title: "blue - INTRO",
-    time4: 30,
-    time5: 18,
-  },
-  {
-    map: myMap,
-    //set colours?
-    title: "indigo - INTRO",
-    time4: 30,
-    time5: 18,
-  },
-  {
-    map: myMap,
-    //set colours?
-    title: "Rviolet - INTRO",
-    time4: 30,
-    time5: 18,
-  },
-];
-
-buildLevelMenu = () => {
-  const p = document.getElementById("menu");
-  levs.forEach((l, i) => {
-    const ctl = document.createElement("div");
-    ctl.classList = "lev";
-    ctl.textContent = l.title;
-    p.appendChild(ctl);
-  });
-};
-
 //TODO: The List
 /*
  * Design
@@ -80,17 +16,19 @@ buildLevelMenu = () => {
  *
  *
  * game
- *   create level object
- *   the ((rainbow))
- *   level menu
- *
+ *   create level object 
+ *     - start level 
+ *     - colour set up 
+ *     - 
  
  */
 
 async function start() {
-  buildLevelMenu();
-  //const controls = mkCtls(document.getElementById("ctls"));
-  //play(myMap, controls);
+  //buildLevelMenu();
+
+  const controls = mkCtls(document.getElementById("ctls"));
+  play(myMap, controls);
+
   //showSprite(uni, "fd tb fd tb u2 tb d2 fd");
 }
 
