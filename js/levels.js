@@ -1,15 +1,25 @@
 const levs = [
   {
-    map: myMap,
+    map: `\
+ ┌──────────────┐   
+ └@───┐         │ 
+    ↓ └#┐       │
+       ↓└─┐ ╭──#┘
+         ↓│ │↓
+       ┌─#┘ ╰──╮ 
+       │       │↓ 
+       └───^───╯ `,
+    bC: "#800",
+    tC: "#f00",
     //set colours?
-    title: "RED - INTRO",
+    title: "Into the Rainbow",
     time4: 30,
     time5: 18,
   },
   {
-    map: myMap,
+    map: map2,
     //set colours?
-    title: "ORANGE - INTRO",
+    title: "ORANGE - Stuff",
     time4: 30,
     time5: 18,
   },

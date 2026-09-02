@@ -1,6 +1,6 @@
 const addSprite = (c, map, gx = 0, gy = 0, rz = 0, is = 0, next) => {
   const ctl = document.createElement("div");
-  ctl.classList.add(c.style, "sprite");
+  ctl.className = "sprite " + c.style;
   const bits = c.bits.map((b) =>
     mkAnimatedCurve(b, ctl, c.bits[0].pos.length, is),
   );
@@ -133,13 +133,56 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
 
     if (ctl.act("u", s.cry) && sol(s, 1, 0) && emp(s, 1, -1)) return "u1";
     if (ctl.act("u", s.cry) && sol(s, 2, 0) && emp(s, 2, -1)) return "u1l";
-    if (ctl.act("u", s.cry) && sol(s, 2, -1) && emp(s, 2, -2)) return "u2";
-    if (ctl.act("u", s.cry) && sol(s, 2, 1) && emp(s, 2, 0)) return "j2";
-    if (ctl.act("u", s.cry) && sol(s, 3, 1) && emp(s, 3, 0)) return "j3";
+    if (
+      ctl.act("u", s.cry) &&
+      sol(s, 2, -1) &&
+      emp(s, 2, -2) &&
+      emp(s, 0, -1) &&
+      emp(s, 1, -1) &&
+      emp(s, 1, -2)
+    )
+      return "u2";
+    if (
+      ctl.act("u", s.cry) &&
+      sol(s, 2, 1) &&
+      emp(s, 1, 0) &&
+      emp(s, 1, -1) &&
+      emp(s, 2, 0)
+    )
+      return "j2";
+    if (
+      ctl.act("u", s.cry) &&
+      sol(s, 3, 1) &&
+      emp(s, 3, 0) &&
+      emp(s, 1, 0) &&
+      emp(s, 1, -1) &&
+      emp(s, 2, 0) &&
+      emp(s, 2, -1)
+    )
+      return "j3";
     if (ctl.act("d", s.cry) && sol(s, 1, 2) && emp(s, 1, 1)) return "d1";
     if (ctl.act("d", s.cry) && sol(s, 2, 2) && emp(s, 2, 1)) return "d1l";
-    if (ctl.act("d", s.cry) && sol(s, 2, 3) && emp(s, 2, 2)) return "d2";
-    if (ctl.act("d", s.cry) && sol(s, 2, 4) && emp(s, 2, 3)) return "d3";
+    if (
+      ctl.act("d", s.cry) &&
+      sol(s, 2, 3) &&
+      emp(s, 1, 0) &&
+      emp(s, 1, 1) &&
+      emp(s, 2, 1) &&
+      emp(s, 2, 2)
+    )
+      return "d2";
+    if (
+      ctl.act("d", s.cry) &&
+      sol(s, 2, 4) &&
+      emp(s, 1, 0) &&
+      emp(s, 1, 1) &&
+      emp(s, 1, 2) &&
+      emp(s, 1, 3) &&
+      emp(s, 2, 1) &&
+      emp(s, 2, 2) &&
+      emp(s, 2, 3)
+    )
+      return "d3";
 
     return "i";
   };
@@ -182,20 +225,20 @@ addNBSprite = (c, map, x, y, rz, cb) => {
   });
 };
 
-addPrz = (map, x, y, rz) =>
+addPrz = (map, ctl, x, y, rz) =>
   addNBSprite(prz, map, x, y, rz, () => {
-    console.log("Set it off and add the prize!");
+    ctl.tkPrz();
   });
 
-addExt = (map, x, y, rz) =>
+addExt = (map, ctl, x, y, rz) =>
   addNBSprite(ext, map, x, y, rz, () => {
-    console.log("Level complete");
+    ctl.end();
   });
 
 const spriteFromCode = (c, map, ctl, x = 0, y = 0, rz = 0) =>
   ({
     "@": () => addUni(map, ctl, x, y, rz),
-    "#": () => addPrz(map, x, y, rz), //Makes a prz that does the idle motion
-    "^": () => addExt(map, x, y, rz, 0, () => "i"), //Makes an exit that does the idle motion
+    "#": () => addPrz(map, ctl, x, y, rz), //Makes a prz that does the idle motion
+    "^": () => addExt(map, ctl, x, y, rz, 0, () => "i"), //Makes an exit that does the idle motion
     "(": () => addSprite(brg, map, x, y, rz, 0, () => "i"), //Makes an exit that does the idle motion
   })[c]?.();

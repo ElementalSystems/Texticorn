@@ -21,9 +21,13 @@ body {
 }
 
 .menu {
+  position: absolute;
+  animation: menuFadeIn 1s ease forwards;
+
   &.hide {
-    display: none;
+    animation: menuFadeOut 2s ease forwards;
   }
+  z-index: 1;
 
   width: 100vw;
   height: 100vh;
@@ -81,6 +85,32 @@ body {
     padding: 1vh;
     font-family: Modern;
     cursor: pointer;
+  }
+}
+
+@keyframes menuFadeOut {
+  0% {
+    opacity: 1;
+    display: flex;
+  }
+  99% {
+    opacity: 0;
+    display: flex;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes menuFadeIn {
+  0% {
+    opacity: 0;
+    display: flex;
+  }
+  100% {
+    opacity: 1;
+    display: flex;
   }
 }
 
@@ -165,6 +195,13 @@ body {
       calc(var(--gY, 0) * var(--gridY)),
       calc(var(--zHeight, 0) / 2)
     );
+
+    .arch .letter {
+      --letZ: calc(
+        (-4 * var(--lir, 0) * var(--lir, 0) + 4 * var(--lir, 0)) * 3rem
+      );
+      --letZ2: 0;
+    }
 
     .sprite {
       transform: rotateZ(calc(var(--gRZ, 0) * -90deg))

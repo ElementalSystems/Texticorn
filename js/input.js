@@ -28,7 +28,7 @@ mkCtl = (par, text) => {
   return c;
 };
 
-mkCtls = (par) => {
+mkCtls = (par, endLevel) => {
   const buts = {
     ld: mkCtl(par, "LDown"),
     lu: mkCtl(par, "LUp"),
@@ -65,7 +65,10 @@ mkCtls = (par) => {
   };
   par.focus();
   return {
+    base: par,
     buts,
+    przCount: 0,
+    stTime: 0,
     down(i) {
       return !!this.buts[i]?.down;
     },
@@ -74,6 +77,20 @@ mkCtls = (par) => {
     },
     act(c, d) {
       return this.anyDown(kmap[d % 2][c]);
+    },
+    start(li) {
+      this.base.focus();
+      this.przCount = 0;
+      this.stTime = Date.now();
+      const map = mkMap(levs[li].map, this, document.getElementById("scene"));
+      return map;
+    },
+    tkPrz() {
+      this.przCount += 1;
+    },
+    end() {
+      //TODO save best scores
+      endLevel();
     },
   };
 };

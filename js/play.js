@@ -2,38 +2,39 @@
 /*
  * Design
  *  * Level design
- *    * 1 - Intro Jumps and controls and curves - prizes and exit (3)
+ *    * 1  ORANGE - Inside and out - First Flip Side
  *    * 2 - The flip side and the solid bits
- *
- *  * more unicorn
- *   * moves (and check empty spaces) (1)
- *
+ *    * 3 - harder  
+ *    * 4 - arena-like
+ *    * 5 - more complex
+ *    * 6 - huge and tricky
+ * 
  * Map
  *
  * Technical
- *  * arch 3d thing (2)
- *  * speech bubble (control the curve text - no layers)
+ *  *  * speech bubble (control the curve text - no layers)
+ *  * Sound
  *
  *
- * game
- *   create level object 
- *     - start level 
- *     - colour set up 
- *     - 
+ * game/ctl
+ *   create level object  
+ *     - colour set up (1)
+ *     - Display for timer and stars (2)
+ *     - Controls Look and layout (3)
  
  */
 
 async function start() {
-  //buildLevelMenu();
+  buildScreen();
 
-  const controls = mkCtls(document.getElementById("ctls"));
-  play(myMap, controls);
+  //play(0);
 
   //showSprite(uni, "fd tb fd tb u2 tb d2 fd");
 }
 
-function play(mapC, controls) {
-  const map = mkMap(mapC, controls, document.getElementById("scene"));
+function play(li) {
+  const controls = mkCtls(document.getElementById("ctls"), () => 0);
+  map = controls.start(li);
   //map.base.style.setProperty("--viewS", 0.25);
   addGridDisplay(map);
 }
