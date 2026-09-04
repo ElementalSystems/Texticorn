@@ -5,24 +5,29 @@
  *    * 1  ORANGE - Inside and out - First Flip Side
  *    * 2 - The flip side and the solid bits
  *    * 3 - harder
- *    * 4 - arena-like
+ *    * 4 - arena-like - round and round - invert
  *    * 5 - more complex
  *    * 6 - huge and tricky
  *
  * Map
  *
  * Technical
- *  *  * speech bubble (control the curve text - no layers)
+ *  * end conditions screen (1)
+ *  * Start and end level - zoom controls (2)
+ * animate new stars!
+ *  * Speech bubble (control the curve text - no layers)
  *  * Sound
  *
  *
  * game/ctl
- *     - Display for timer and stars (2)
+ *     - simple level start up (show options and )
+ *     - Make the stars bulge when scored (3)
+ *     - Level start up zooms etc
+ *     - local storage - unlocking levels
  */
 
 async function start() {
   buildScreen();
-
   //play(0);
 
   //showSprite(uni, "fd tb fd tb u2 tb d2 fd");
@@ -30,7 +35,7 @@ async function start() {
 
 function play(li) {
   const controls = mkCtls(document.getElementById("ctls"), () => 0);
-  map = controls.start(li);
+  map = controls.startUp(li);
   //map.base.style.setProperty("--viewS", 0.25);
   addGridDisplay(map);
 }

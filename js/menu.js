@@ -16,8 +16,7 @@ buildLevelMenu = (p, sl) => {
 
 buildScreen = () => {
   const menu = buildLevelMenu(document.getElementById("menu"), (li) => {
-    document.getElementById("scene").innerHTML = "";
-    ctls.start(li);
+    ctls.startUp(li);
     menu.hide();
   });
   menu.show();

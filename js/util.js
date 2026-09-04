@@ -66,3 +66,10 @@ eachFrame = (on) => {
   };
   onFrame(func); //call it the first time
 };
+
+everyX = (time, on) => {
+  const func = (t, ft) => {
+    if (on(t, ft)) setTimeout(func, time);
+  };
+  func(); //call it the first time
+};

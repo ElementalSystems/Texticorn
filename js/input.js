@@ -1,4 +1,4 @@
-mkCtl = (par, text) => {
+mkCtl = (par, text, clk) => {
   const c = {
     el: document.createElement("div"),
     down: 0,
@@ -15,6 +15,7 @@ mkCtl = (par, text) => {
   c.el.addEventListener("pointerdown", (e) => {
     c.el.setPointerCapture(e.pointerId); // Captures release events even off-element
     setActive(true);
+    clk?.();
   });
 
   c.el.addEventListener("pointerup", () => setActive(false));
@@ -33,7 +34,9 @@ mkCtls = (par, endLevel) => {
     ld: mkCtl(par, "⇙"),
     lu: mkCtl(par, "⇖"),
     l: mkCtl(par, "⇐"),
-    c: mkCtl(par, "?"),
+    c: mkCtl(par, "☰", () => {
+      ctl.pause();
+    }),
     r: mkCtl(par, "⇒"),
     ru: mkCtl(par, "⇗"),
     rd: mkCtl(par, "⇘"),
@@ -65,11 +68,16 @@ mkCtls = (par, endLevel) => {
     buts[e.keyCode] = {down: false};
   };
   par.focus();
-  return {
+  const ctl = {
     base: par,
+    topbar: document.getElementById("topbar"),
     buts,
+    cli: 0,
     przCount: 0,
     stTime: 0,
+    time: 0,
+    timerOn: false,
+    status: 0, //new level
     down(i) {
       return !!this.buts[i]?.down;
     },
@@ -79,19 +87,84 @@ mkCtls = (par, endLevel) => {
     act(c, d) {
       return this.anyDown(kmap[d % 2][c]);
     },
-    start(li) {
-      this.base.focus();
+    startUp(li) {
+      document.getElementById("tl1").textContent = "<" + levs[li].time1 + "s";
+      document.getElementById("tl2").textContent = "<" + levs[li].time2 + "s";
+      document.getElementById("title").textContent = levs[li].title;
+      everyX(100, () => {
+        this.updateTB();
+        return this.status != 4;
+      });
+      this.cli = li;
+      this.status = 0;
+      return this.start();
+    },
+
+    start(go) {
+      document.getElementById("scene").innerHTML = "";
+      const map = mkMap(levs[this.cli], this, document.getElementById("scene"));
+      this.status = 0; //playing
       this.przCount = 0;
       this.stTime = Date.now();
-      const map = mkMap(levs[li], this, document.getElementById("scene"));
+      this.time = 0;
+      if (go) this.cont();
+      else this.pause();
       return map;
     },
+    updateTB() {
+      if (this.timerOn) this.time += (Date.now() - this.stTime) / 1000;
+      this.stTime = Date.now();
+      for (let i = 0; i < 5; i += 1) {
+        document
+          .getElementById("s" + i)
+          .classList.toggle("set", this.przCount > i);
+      }
+      document.getElementById("time").textContent = this.time.toFixed(1) + "s";
+      document.getElementById("C_C").classList.toggle("a", this.status == 1);
+      document.getElementById("C_S").classList.toggle("a", this.status == 0);
+      document.getElementById("C_R").classList.toggle("a", this.status != 0);
+      document.getElementById("C_N").classList.toggle("a", this.status == 2);
+    },
     tkPrz() {
+      console.log("got a prize");
       this.przCount += 1;
     },
-    end() {
-      //TODO save best scores
+    pause() {
+      this.timerOn = false;
+      this.updateTB();
+      this.topbar.classList.toggle("closed", false);
+      this.base.classList.toggle("disable", true);
+    },
+    cont() {
+      this.status = 1;
+      this.timerOn = true;
+      this.updateTB();
+      this.base.focus();
+      this.topbar.classList.toggle("closed", true);
+      this.base.classList.toggle("disable", false);
+    },
+    exit() {
       endLevel();
     },
+    end() {
+      this.status = 2; //done
+      if (this.przCount >= 3) {
+        if (this.time < levs[this.cli].time1) this.przCount += 1;
+        if (this.time < levs[this.cli].time2) this.przCount += 1;
+      }
+      this.pause();
+      //TODO save best scores
+      //TODO Animate Out etc
+      //endLevel();
+    },
   };
+  //bind the button handlers
+  document.getElementById("C_C").onclick = () => ctl.cont();
+  //TODO Start up with the menu opem status = 0 new
+  document.getElementById("C_S").onclick = () => ctl.cont();
+  document.getElementById("C_R").onclick = () => ctl.start(1);
+  document.getElementById("C_X").onclick = () => ctl.exit();
+  document.getElementById("C_N").onclick = () => ctl.startUp(ctl.cli + 1);
+
+  return ctl;
 };

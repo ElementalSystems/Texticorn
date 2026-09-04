@@ -1,5 +1,6 @@
 html,
 body {
+  font-family: sans-serif;
   margin: 0;
   height: 100%;
   overflow: hidden;
@@ -87,7 +88,6 @@ body {
     font-size: 5vh;
     border-radius: 10vh;
     padding: 1vh;
-    font-family: Modern;
     cursor: pointer;
   }
 }
@@ -150,10 +150,8 @@ body {
 .map {
   font-size: 20rem;
   line-height: 1.1;
-  width: 1000vw;
-  height: 1000vh;
+
   --zHeight: 5rem;
-  background-color: #0884;
   --dct: #fff;
   --dcb: #000;
   position: relative;
@@ -162,6 +160,9 @@ body {
   --gridY: calc(1em * 1.1 / 2);
   --gridXO: calc(var(--gridX) / 2);
   background-size: var(--gridX) var(--gridY);
+
+  width: calc(var(--gridXF, 1) * var(--gridX));
+  height: calc(var(--gridYF, 1) * var(--gridY));
 
   --viewX: 0;
   --viewY: 0;
@@ -184,7 +185,6 @@ body {
   background-image:
     linear-gradient(to right, rgba(0, 0, 0, 0.15) 2px, transparent 2px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 2px, transparent 2px);
-
   .ga {
     width: 0.05em;
     height: 0.05em;
@@ -223,6 +223,33 @@ body {
     left: 0;
     transform: translateX(calc(var(--col, 0) * var(--gridX)));
   }
+}
+
+.map::after {
+  content: "TESTING";
+  position: absolute;
+
+  /* Extend beyond the parent using negative inset values */
+  top: -200vh;
+  left: -200vw;
+  right: -200vw;
+  bottom: -200vh;
+
+  /* Place the element visually behind the parent content */
+  z-index: -1;
+
+  /* Define your radial fill */
+  background: linear-gradient(
+    to bottom,
+    var(--trc) 0,
+    var(--trc) 180vh,
+    var(--dcb) calc(200vh + var(--gridX) * 4),
+    var(--dcb) calc(100% - 200vh - var(--gridX) * 4),
+    var(--brc) calc(100% - 180vh),
+    var(--brc) 100%
+  );
+  transform: translateZ(-10px);
+  pointer-events: none;
 }
 
 pre {
@@ -279,7 +306,6 @@ pre {
 }
 
 .uni {
-  font-family: Modern;
   --zHeight: 2.2rem;
   font-size: 1rem;
   --dct: #008;
@@ -342,7 +368,110 @@ pre {
   font-weight: bold;
 }
 
+#topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  color: #fffa;
+  font-size: min(4vw, 4vh);
+  #tbox {
+    position: relative;
+    box-shadow: inset 0 0 5em 0 #000;
+    background: #0008;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0 0 1rem 1rem;
+  }
+  #cmds {
+    max-height: 100vh;
+    transition: max-height 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    overflow: hidden;
+    gap: 0.5em;
+    padding: 1em;
+    div {
+      display: none;
+      text-align: center;
+      box-shadow: inset 0 0 1em 0 #000;
+      border: #fff5 1px solid;
+      border-radius: 2rem;
+      padding: 0.2em 2em;
+      cursor: pointer;
+      &.a {
+        display: inherit;
+      }
+    }
+  }
+  #best {
+    font-size: 50%;
+    padding: 1em;
+    color: #aaa;
+  }
+  #title {
+    padding: 0.25em;
+  }
+  #top {
+    padding: 0.1rem 2rem;
+
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    .st {
+      text-align: center;
+      div {
+        font-size: 30%;
+      }
+    }
+    .st.set::before {
+      content: "★";
+    }
+    .st::before {
+      content: "☆";
+    }
+    #time {
+      font-size: 120%;
+      padding: 0.25em;
+      width: 4em;
+      text-align: center;
+      border-radius: 2em;
+      border: 1px #fff8 solid;
+
+      box-shadow: inset 0 0 1em 0 #000;
+    }
+  }
+}
+
+#topbar.closed {
+  #cmds {
+    max-height: 0;
+    padding: 0;
+  }
+  #best {
+    display: none;
+  }
+  #title {
+    left: 1em;
+    position: absolute;
+    font-size: 40%;
+  }
+  #tbox {
+    background: transparent;
+    box-shadow: inset 0 0 1em 0 #000a;
+  }
+}
+
 #ctls {
+  &.disable {
+    opacity: 0.1;
+    pointer-events: none;
+  }
   position: absolute;
   bottom: 0.25rem;
   left: 0;
@@ -361,7 +490,6 @@ pre {
     width: 1lh;
     text-align: center;
     padding: 0.5em;
-    border: 1px #000 solid;
     color: #fff;
     border-radius: 50%;
     user-select: none;

@@ -4,14 +4,14 @@ const mkMap = (lev, ctls, parentEl, layers = 5) => {
   base.classList.add("map");
   base.style.setProperty("--dct", "var(--cT" + lev.col + ")");
   base.style.setProperty("--dcb", "var(--cB" + lev.col + ")");
+  base.style.setProperty("--trc", "var(--cB" + (lev.col - 1) + ")");
+  base.style.setProperty("--brc", "var(--cB" + (lev.col + 1) + ")");
 
   parentEl.appendChild(base);
   const map = {
     base,
     scene: parentEl,
     grid: mkGrid(text),
-    gCols: mkWalls(base, text),
-    //layers: buildDepth(base, layers),
     follow: null,
 
     g_state(x, y) {
@@ -54,25 +54,34 @@ const mkMap = (lev, ctls, parentEl, layers = 5) => {
     },
   };
   addSprites(map, ctls, text);
+  mkWalls(map, text);
+
   return map;
 };
 
-const mkWalls = (base, text) => {
+const mkWalls = (map, text) => {
   const lines = text.replace(/[\^(@#]/g, "─").split("\n");
   const numCols = Math.max(...lines.map((l) => l.length));
   const w = [];
+
+  map.gridXF = numCols;
+  map.gridYF = lines.length * 2;
+
+  //set up width and height of board in grids
+  map.base.style.setProperty("--gridXF", numCols);
+  map.base.style.setProperty("--gridYF", lines.length * 2);
 
   //for each column create an element
   for (c = 0; c < numCols; c += 1) {
     const e = document.createElement("div");
     e.classList.add("wall");
     e.textContent = lines.map((l) => l[c] ?? " ").join("\n");
-    base.appendChild(e);
+    map.base.appendChild(e);
     e.style.setProperty("--col", c);
     buildDepth(e, 5);
     w.push(e);
   }
-
+  map.gCols = w;
   return w;
 };
 
