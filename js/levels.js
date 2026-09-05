@@ -17,12 +17,26 @@ const levs = [
   {
     col: 2,
     map: `
+  ╭───────────────┐
+  │  ▐▌     ▐▌┌─@─┘
+  └#─┐ ▐▌ ▐█▌ │
+     │╭───(──╮│
+   ╭─┘╰─$#───╯│
+   ╰────────^─╯
+                 `,
+    title: "Flippin Out",
+    time1: 70,
+    time2: 50,
+  },
+  {
+    col: 3,
+    map: `
   ╭───────────────────┐ 
   │ ╭─@──(───╮        │ 
   │ │ ?      ╰─#┐     │
   │ │   ?    ┌──╯╭──(─┘
   │ └#─(─────╯  ╭┘      
-  └──^────(──#──╯
+  └──^────(──$──╯
                  `,
     title: "The Flip Side",
     time1: 100,
@@ -59,13 +73,7 @@ const levs = [
     time4: 30,
     time5: 18,
   },
-  {
-    map: myMap,
-    //set colours?
-    title: "blue - INTRO",
-    time4: 30,
-    time5: 18,
-  },
+
   {
     map: myMap,
     //set colours?

@@ -242,6 +242,7 @@ const spriteFromCode = (c, map, ctl, x = 0, y = 0, rz = 0) =>
   ({
     "@": () => addUni(map, ctl, x, y, rz),
     "#": () => addPrz(map, ctl, x, y, rz), //Makes a prz that does the idle motion
-    "^": () => addExt(map, ctl, x, y, rz, 0, () => "i"), //Makes an exit that does the idle motion
+    $: () => addPrz(map, ctl, x, y, rz), //Makes a prz that does the idle motion
+    "^": () => addExt(map, ctl, x, y, rz, 0), //Makes an exit that does the idle motion
     "(": () => addSprite(brg, map, x, y, rz, 0, () => "i"), //Makes an exit that does the idle motion
   })[c]?.();

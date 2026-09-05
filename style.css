@@ -194,17 +194,13 @@ body {
 
   /* Pin both layers directly to the top-left edge of the box */
   background-position: var(--gridXO) 0;
-  background-image:
+  background-imagex:
     linear-gradient(to right, rgba(0, 0, 0, 0.15) 2px, transparent 2px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 2px, transparent 2px);
   .ga {
-    width: 0.05em;
-    height: 0.05em;
-
     border-radius: 0 50% 50% 50%;
     top: calc(var(--gridY) / 2);
     left: var(--gridXO);
-    background-color: #0ff5;
     position: absolute;
     transform: translate3d(
       calc(var(--gX, 0) * var(--gridX) + var(--gridXO)),

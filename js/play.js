@@ -2,23 +2,25 @@
 /*
  * Design
  *  * Level design
- *    * 2 - The flip side and the solid bits
  *    * 3 - harder
  *    * 4 - arena-like - round and round - invert
  *    * 5 - more complex
  *    * 6 - huge and tricky
+ *  * Sprites
+ *      color unicorn (1)
+ *      Make stars
+ *      fix flips
  *
- * Map
+ * Map\
  *
  * Technical
- *  * start at center of the block and set zoom
- *     - zoom controls (2)
+ *  * End of Level thing
  *  * Speech bubble (control the curve text - no layers)
  *  * Sound
  *
  *
  * game/ctl
- *     - Level start up zooms etc
+
  *     - local storage - unlocking levels
  */
 

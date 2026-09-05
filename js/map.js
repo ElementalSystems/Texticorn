@@ -110,7 +110,7 @@ const mkMap = (lev, ctls, parentEl, layers = 5) => {
 };
 
 const mkWalls = (map, text) => {
-  const lines = text.replace(/[\^(@#]/g, "─").split("\n");
+  const lines = text.replace(/[\^($@#]/g, "─").split("\n");
   const numCols = Math.max(...lines.map((l) => l.length));
   const w = [];
 
@@ -178,7 +178,10 @@ const addSprites = (map, ctls, text) => {
   const lines = text.split("\n");
   lines.forEach((l, y) =>
     [...l].forEach((c, x) => {
-      if (map.g_solid(x, y * 2)) spriteFromCode(c, map, ctls, x, y * 2 + 1, 2);
+      //inside Codes
+      let i = "$".includes(c) ? 1 : 0; //place it in the solid if you can
+      if (map.g_solid(x, y * 2) ^ i)
+        spriteFromCode(c, map, ctls, x, y * 2 + 1, 2);
       else spriteFromCode(c, map, ctls, x, y * 2);
     }),
   );
