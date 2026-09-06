@@ -3,7 +3,8 @@
  * Design
  *  * Level design
  *    * 3 - harder
- *    * 4 - arena-like - round and round - inverts
+ *    * 4 - arena-like - round and round - invert
+ *    * 5 - more complex (1)
  *    * 6 - huge and tricky
  *  * Level menu and narrow screens
  *
@@ -13,7 +14,6 @@
  * Map
  *
  * Technical
- *  * Make special character display in maps (1)
  *  * fix end of game running sprites
  *  * Speech bubble (control the curve text - no layers)
  *  * Sound
