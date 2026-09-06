@@ -5,6 +5,7 @@ body {
   height: 100%;
   overflow: hidden;
   font-size: min(1.5vh, 1.5vw);
+  background-color: #0aa;
 
   --cT0: #000;
   --cT1: #f00;
@@ -184,7 +185,7 @@ body {
   transform-origin: left top;
 
   min-width: 100%;
-  transform: translate3d(50vw, 50vh, 0) rotateZ(calc(var(--viewRZ) * 90deg))
+  transform: translate3d(50vw, 50vh, 1rem) rotateZ(calc(var(--viewRZ) * 90deg))
     scale3d(var(--viewS, 1), var(--viewS, 1), 1)
     translate3d(
       calc(((var(--viewX, 0) * var(--gridX) + var(--gridX)) * -1)),
@@ -194,7 +195,7 @@ body {
 
   /* Pin both layers directly to the top-left edge of the box */
   background-position: var(--gridXO) 0;
-  background-imagex:
+  background-image:
     linear-gradient(to right, rgba(0, 0, 0, 0.15) 2px, transparent 2px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 2px, transparent 2px);
   .ga {
@@ -205,14 +206,17 @@ body {
     transform: translate3d(
       calc(var(--gX, 0) * var(--gridX) + var(--gridXO)),
       calc(var(--gY, 0) * var(--gridY)),
-      calc(var(--zHeight, 0) / 2)
+      calc(var(--zHeight, 0) * (var(--gridZ, 0) + 0.5))
     );
 
     .arch .letter {
       --letZ: calc(
-        (-4 * var(--lir, 0) * var(--lir, 0) + 4 * var(--lir, 0)) * 3rem
+        (-4 * var(--lir, 0) * var(--lir, 0) + 4 * var(--lir, 0)) * 2rem
       );
-      --letZ2: 0;
+    }
+
+    .rbow .letter {
+      color: oklch(0.3 0.2 calc(var(--lir) * 360));
     }
 
     .sprite {
@@ -314,41 +318,35 @@ pre {
 }
 
 .uni {
-  --zHeight: 2.2rem;
   font-size: 1rem;
-  --dct: #008;
-  color: #008;
+  --dct: #ccc;
+  color: #0008;
   --zHeight: 0.5rem;
 
   .limb {
-    --dctx: #a00;
-    colorx: #a00;
     &.f {
       transform: translateZ(0.5rem);
-      color: #0ff;
     }
     &.b {
       transform: translateZ(-0.5rem);
     }
   }
   .horn {
-    color: #f0f;
-    --dct: #f0f;
+    color: #fff;
+    --dct: #fff;
     font-weight: bold;
     font-size: 1rem;
   }
   .bd {
     font-size: 2rem;
-    --zHeight: 1rem;
-    color: #44a;
+    --zHeight: 2rem;
   }
   .head {
     font-size: 1.2rem;
-    --dct: #00f;
   }
   .tail {
-    color: #020;
-    --dct: #080;
+    color: #000;
+    --dct: #fff8;
     font-weight: lighter;
     font-size: 1rem;
   }
@@ -356,23 +354,21 @@ pre {
 
 .prz {
   --zHeight: 1rem;
-  font-size: 2rem;
-  --dct: #f08;
-  color: #008;
+  font-size: 1.5rem;
+  --dct: #fff8;
 }
 
 .ext {
   --zHeight: 0.5rem;
   font-size: 2rem;
-  --dct: #f44;
-  color: #fff;
+  --dct: #fffa;
 }
 
 .brg {
   --zHeight: 1rem;
   font-size: 2rem;
   --dct: #fff;
-  color: #080;
+  color: #000;
   font-weight: bold;
 }
 
@@ -382,7 +378,9 @@ pre {
   left: 0;
   right: 0;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-contentx: center;
   color: #fffa;
   font-size: min(4vw, 4vh);
   #tbox {
@@ -395,24 +393,28 @@ pre {
     border-radius: 0 0 1rem 1rem;
   }
   #cmds {
-    max-height: 100vh;
-    transition: max-height 0.5s;
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    flex-direction: row;
+    align-items: center;
+
     overflow: hidden;
     gap: 0.5em;
-    padding: 1em;
+    padding: 0.5em;
     div {
       display: none;
       text-align: center;
+      flex-direction: column;
       box-shadow: inset 0 0 1em 0 #000;
       border: #fff5 1px solid;
       border-radius: 2rem;
-      padding: 0.2em 2em;
+      padding: 0.2em 1.5em;
       cursor: pointer;
+      font-size: 60%;
+      &.p {
+        font-size: 120%;
+      }
       &.a {
-        display: inherit;
+        display: flex;
       }
     }
   }
@@ -420,13 +422,19 @@ pre {
     font-size: 50%;
     padding: 1em;
     color: #aaa;
+    transition: font-size 1s;
   }
   #title {
+    left: 0.5em;
+    position: absolute;
     padding: 0.25em;
+    font-size: 100%;
+    transition: font-size 1s;
   }
   #top {
     padding: 0.1rem 2rem;
-
+    margin-top: 1em;
+    transition: margin-top 1s;
     display: flex;
     gap: 2rem;
     justify-content: center;
@@ -434,7 +442,7 @@ pre {
     .st {
       text-align: center;
       div {
-        font-size: 30%;
+        font-size: 40%;
       }
       &.set {
         animation: starFlash 0.5s 6 alternate;
@@ -461,15 +469,15 @@ pre {
 
 #topbar.closed {
   #cmds {
-    max-height: 0;
-    padding: 0;
-  }
-  #best {
     display: none;
   }
+  #best {
+    font-size: 1%;
+  }
+  #top {
+    margin-top: 0;
+  }
   #title {
-    left: 1em;
-    position: absolute;
     font-size: 40%;
   }
   #tbox {

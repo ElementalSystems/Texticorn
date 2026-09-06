@@ -91,19 +91,16 @@ mkCtls = (par, endLevel) => {
       document.getElementById("tl1").textContent = "<" + levs[li].time1 + "s";
       document.getElementById("tl2").textContent = "<" + levs[li].time2 + "s";
       document.getElementById("title").textContent = levs[li].title;
-      everyX(100, () => {
-        this.updateTB();
-        return this.status != 2;
-      });
       this.cli = li;
       this.status = 0;
       return this.start();
     },
 
     start(go) {
+      document.getElementById("bst").textContent = lastT(this.cli);
       document.getElementById("scene").innerHTML = "";
+      this.status = 0; //new game
       this.map = mkMap(levs[this.cli], this, document.getElementById("scene"));
-      this.status = 0; //playing
       this.przCount = 0;
       this.stTime = Date.now();
       this.time = 0;
@@ -126,7 +123,6 @@ mkCtls = (par, endLevel) => {
       document.getElementById("C_N").classList.toggle("a", this.status == 2);
     },
     tkPrz() {
-      console.log("got a prize");
       this.przCount += 1;
     },
     pause() {
@@ -150,20 +146,34 @@ mkCtls = (par, endLevel) => {
       endLevel();
     },
     end() {
-      this.status = 2; //done
+      //freeze and unzoom the camera
       if (this.przCount >= 3) {
         if (this.time < levs[this.cli].time1) this.przCount += 1;
         if (this.time < levs[this.cli].time2) this.przCount += 1;
       }
-      this.pause();
-      //TODO save best scores
-      //TODO Animate Out etc
-      //endLevel();
+      this.status = 2; //done
+      this.timerOn = false;
+      this.updateTB();
+      this.topbar.classList.toggle("closed", false);
+      this.base.classList.toggle("disable", true);
+      this.map.lookAt(this.map.follow.gx, this.map.follow.gy + 2);
+      this.map.setVPW(6);
+      if (this.przCount >= 3) {
+        if ((loc[this.cli + "t"] ?? 10000) > this.time)
+          loc[this.cli + "t"] = this.time;
+      }
+      if ((loc[this.cli + "p"] ?? 0) < this.przCount)
+        loc[this.cli + "p"] = this.przCount;
+      saveLoc();
     },
   };
+  //launch score board and timer updater.
+  everyX(100, () => {
+    ctl.updateTB();
+    return true;
+  });
   //bind the button handlers
   document.getElementById("C_C").onclick = () => ctl.cont();
-  //TODO Start up with the menu opem status = 0 new
   document.getElementById("C_S").onclick = () => ctl.cont();
   document.getElementById("C_R").onclick = () => ctl.start(1);
   document.getElementById("C_X").onclick = () => ctl.exit();

@@ -45,8 +45,14 @@ const addSprite = (c, map, gx = 0, gy = 0, rz = 0, is = 0, next) => {
       const fry = this.cry + (mb.try || 0);
       const ff = (this.cf + (mb.tf || 0)) % 2;
       if (mb.sVP && map.followOn) {
+        //move has a scale suggestion
         map.setVPW(mb.sVP);
       }
+      if (mb.sZ) {
+        //set our lift offset
+        this.ga.style.setProperty("--gridZ", mb.sZ);
+      }
+
       return animateOver(
         mb.t * this.moveTF,
         (r) => {
@@ -124,8 +130,15 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
     map.g_flp(sp.gx + sp.dirX(x, y), sp.gy + sp.dirY(x, y));
 
   const emp = (sp, x, y) => !sol(sp, x, y);
-
+  let active = true;
   const sA = (s) => {
+    if (!active) return null;
+    if (ctl.status == 2) {
+      //level ended
+      active = false;
+      return "x";
+    }
+    if (!ctl.timerOn) return "p";
     if (flp(s, 0, 0) && sol(s, 1, 1)) return "f"; //can always flip from a bridge into rock
     if (ctl.act("b", s.cry)) return "tb"; //can always turn
     if (ctl.act("f", s.cry) && sol(s, 1, 1) && emp(s, 1, 0)) return "fd";
@@ -215,7 +228,6 @@ addNBSprite = (c, map, x, y, rz, cb) => {
     if (map.follow) {
       let dist = Math.hypot(x - map.follow.gx, y - map.follow.gy);
       if (dist < 0.5 && map.follow.rz % 4 == rz) {
-        //he got us!
         is = -1;
         cb?.();
         return "f";

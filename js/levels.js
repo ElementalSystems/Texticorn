@@ -73,13 +73,19 @@ const levs = [
     time4: 30,
     time5: 18,
   },
-
   {
-    map: myMap,
-    //set colours?
-    title: "indigo - INTRO",
-    time4: 30,
-    time5: 18,
+    col: 6,
+    map: `
+  ╭───────────────┐
+  │  ▐▌     ▐▌┌───┘
+  └#─┐ ▐▌ ▐█▌ │
+     │╭───(──╮│
+   ╭─┘╰─$#───╯│
+   ╰───@────^─╯
+                 `,
+    title: "exit test",
+    time1: 70,
+    time2: 50,
   },
   {
     map: myMap,

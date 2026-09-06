@@ -6,29 +6,28 @@
  *    * 4 - arena-like - round and round - invert
  *    * 5 - more complex
  *    * 6 - huge and tricky
- *  * Sprites
- *      color unicorn (1)
- *      Make stars
- *      fix flips
+ *  * Level menu and narrow screens
  *
- * Map\
+ *
+ *  * Sprites
+ *
+ * Map
  *
  * Technical
- *  * End of Level thing
  *  * Speech bubble (control the curve text - no layers)
  *  * Sound
+ *  * Mobile redraw issues - think and test
  *
  *
  * game/ctl
-
- *     - local storage - unlocking levels
+ *     - display stars on levels
+ *     - unlocking levels (2)
  */
 
 async function start() {
   buildScreen();
-  //play(1);
-
-  //showSprite(uni, "fd tb fd tb u2 tb d2 fd");
+  //play(2);
+  //showSprite(uni, "x");
 }
 
 function play(li) {
@@ -40,16 +39,24 @@ function play(li) {
 
 //HACK: Design time code only - remove
 async function showSprite(config, mn) {
-  const map = mkMap(mapD, null, document.getElementById("scene"));
+  const map = mkMap(
+    {
+      map: mapD,
+      col: 2,
+    },
+    null,
+    document.getElementById("scene"),
+  );
   //addGridDisplay(map);
-  map.base.style.setProperty("--viewS", 0.75);
+  //map.base.style.setProperty("--viewS", 0.75);
+  map.setVPW(8);
 
   map.setCamera(4, 3, 0);
   config.bits[0].pos.forEach((_, i) => addSprite(config, map, i + 1, 1, 0, i));
   if (mn) {
-    let t = addSprite(config, map, 1, 1);
+    let t = addSprite(config, map);
     while (true) {
-      t.setP(1, 2, 100, 0);
+      t.setP(2, 4, 100, 0);
       let mns = mn.split(" ");
       for (let i = 0; i < mns.length; i += 1) await t.move(mns[i]);
     }

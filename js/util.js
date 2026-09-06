@@ -73,3 +73,19 @@ everyX = (time, on) => {
   };
   func(); //call it the first time
 };
+
+//local storage
+loc = JSON.parse(localStorage.getItem("Glyphicon") ?? "{}");
+saveLoc = () => {
+  localStorage.setItem("Glyphicon", JSON.stringify(loc));
+};
+
+//Text builders
+lastT = (li) => {
+  let ps = loc[li + "p"] ?? 0;
+  return (
+    "★".repeat(ps) +
+    "☆".repeat(5 - ps) +
+    (ps >= 3 ? " (" + (loc[li + "t"] ?? 1000).toFixed(1) + "s)" : "")
+  );
+};
