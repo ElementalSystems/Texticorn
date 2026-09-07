@@ -3,7 +3,7 @@ body {
   font-family: sans-serif;
   margin: 0;
   height: 100%;
-  overflow: hidden;
+  overflow: clip;
   font-size: min(1.5vh, 1.5vw);
   background-color: #0aa;
 
@@ -313,7 +313,11 @@ pre {
       0,
       calc(var(--i, 0) * var(--zHeight, 1em) + var(--zOffset, 0em))
     )
-    scale(calc(1 - 0.1 * abs(var(--i, 0))));
+    scale3d(
+      calc(1 - 0.1 * abs(var(--i, 0))),
+      calc(1 - 0.1 * abs(var(--i, 0))),
+      1
+    );
 }
 
 .letter {
@@ -406,8 +410,6 @@ pre {
     display: flex;
     flex-direction: row;
     align-items: center;
-
-    overflow: hidden;
     gap: 0.5em;
     padding: 0.5em;
     div {

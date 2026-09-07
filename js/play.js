@@ -23,8 +23,8 @@
  */
 
 async function start() {
-  buildScreen();
-  //play(3);
+  //buildScreen();
+  play(6);
   //showSprite(uni, "x");
 }
 
