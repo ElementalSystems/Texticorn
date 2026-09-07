@@ -4,7 +4,7 @@
  *  * Level design
  *    * 3 - harder
  *    * 4 - arena-like - round and round - inverts
- *    * 6 - huge and tricky
+ *    * 6 - huge and tricky - cruxiform (2)
  *  * Level menu and narrow screens
  *
  *
@@ -13,15 +13,14 @@
  * Map
  *
  * Technical
- *  * Make special character display in maps (1)
  *  * fix end of game running sprites
  *  * Speech bubble (control the curve text - no layers)
  *  * Sound
- *  * Mobile redraw issues - think and test
- *
+ *  * Mobile redraw issues and ZOOM (1)
  *
  * game/ctl
- *     - unlocking levels (2)
+ *     - unlocking levels (3)
+ *     - Bug for extra stars
  */
 
 async function start() {

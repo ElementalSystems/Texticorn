@@ -125,7 +125,7 @@ const mkWalls = (map, text) => {
   for (c = 0; c < numCols; c += 1) {
     const e = document.createElement("div");
     e.classList.add("wall");
-    e.textContent = lines.map((l) => l[c] ?? " ").join("\n");
+    e.innerHTML = lines.map((l) => l[c] ?? " ").join("\n");
     map.base.appendChild(e);
     e.style.setProperty("--col", c);
     buildDepth(e, 5);

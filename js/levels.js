@@ -86,8 +86,8 @@ const levs = [
 `,
     col: 6,
     title: "Around the Block",
-    time1: 30,
-    time2: 18,
+    time1: 180,
+    time2: 100,
   },
 
   {
