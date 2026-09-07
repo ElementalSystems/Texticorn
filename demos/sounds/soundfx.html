@@ -1,0 +1,377 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Sound FX Demo</title>
+  </head>
+
+  <body>
+    Mechanical Grind
+    <button onclick="playGrind(100, 5, 0.8)">Low SlowT</button>
+    <button onclick="playGrind(100, 10, 0.8)">Low FastT</button>
+    <button onclick="playGrind(200, 10, 0.8)">Higher Fast</button>
+    <hr />
+    Hydrolic Whoosh
+    <button onclick="playWhoosh(2, false)">Slow</button>
+    <button onclick="playWhoosh(1.2, false)">Med</button>
+    <button onclick="playWhoosh(0.5, false)">Fast</button>
+    <button onclick="playWhoosh(2, true)">Slow (up)</button>
+    <button onclick="playWhoosh(1.2, true)">Med (up)</button>
+    <button onclick="playWhoosh(0.5, true)">Fast(up)</button>
+    <hr />
+    Spin Up
+    <button onclick="playSpin(5)">Very long</button>
+    <button onclick="playSpin(2)">Slow</button>
+    <button onclick="playSpin(1)">Fast</button>
+    <hr />
+    Hoofs
+    <button onclick="playHoof()">Hoof</button>
+    <button onclick="playGallop(0.4)">Gallop</button>
+    <button onclick="playGallop(1)">Gallop (slow)</button>
+    <button onclick="playTrot(1)">Trot (slow)</button>
+    <button onclick="playTrot(0.4)">Trot (fast)</button>
+    <hr />
+    Hinge
+    <button onclick="mew(0.3, 0.3, 0, 200, 100, 10)">Down</button>
+    <button onclick="mew(3, 3, 0, 100, 200, 10)">Up</button>
+    <hr />
+    Horse Noises
+    <button onclick="nay(1.5, 0, 600, 850, 15)">Lets Go</button>
+    <button onclick="nay(0.5, 0, 600, 400, 30)">Omph</button>
+    <button onclick="nay(2, 0, 600, 400, 10)">Refuse</button>
+    <hr />
+
+    <script>
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      //make noiseBuffer
+      const bufferSize = 2 * audioCtx.sampleRate;
+      const noiseBuffer = audioCtx.createBuffer(
+        1,
+        bufferSize,
+        audioCtx.sampleRate,
+      );
+      const output = noiseBuffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        output[i] = Math.random() * 2 - 1; // white noise
+      }
+
+      function noiseS() {
+        //creates a node for white noise
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = noiseBuffer;
+        noise.loop = true;
+        return noise;
+      }
+
+      function makeDistortionCurve(amount) {
+        const k = typeof amount === "number" ? amount : 50;
+        const n_samples = 44100;
+        const curve = new Float32Array(n_samples);
+        const deg = Math.PI / 180;
+        for (let i = 0; i < n_samples; ++i) {
+          const x = (i * 2) / n_samples - 1;
+          curve[i] = ((3 + k) * x * 20 * deg) / (Math.PI + k * Math.abs(x));
+        }
+        return curve;
+      }
+
+      function playGrind(freq, rep, dur) {
+        // Noise source (buffered white noise)
+        const noise = noiseS();
+        const now = audioCtx.currentTime;
+        // Low-pass filter (makes it deep/rumbling)
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.value = freq;
+
+        const distortion = audioCtx.createWaveShaper();
+        distortion.curve = makeDistortionCurve(200);
+        distortion.oversample = "4x";
+
+        // Modulation: LFO to move filter cutoff for "scraping" feel
+        const lfo = audioCtx.createOscillator();
+        lfo.frequency.value = rep; // Hz, experiment 5–20
+        const lfoGain = audioCtx.createGain();
+        lfoGain.gain.value = 50; // filter modulation depth
+        lfo.connect(lfoGain).connect(filter.frequency);
+        lfo.start();
+
+        // Connect chain: noise -> filter -> distortion -> destination
+        noise.connect(filter);
+        filter.connect(distortion);
+        distortion.connect(audioCtx.destination);
+
+        // Play
+        noise.start(now);
+        noise.stop(now + dur);
+        return noise;
+      }
+
+      function playWhoosh(dur, rampUp) {
+        // White noise source
+
+        const noise = noiseS();
+        const now = audioCtx.currentTime;
+        // Bandpass filter (airy valve effect)
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.value = 1500; // center frequency
+        filter.Q.value = 1; // resonance
+
+        // Amplitude envelope (air blast shape)
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(1, now + dur * (rampUp ? 0.5 : 0.05)); // fast attack
+        gain.gain.exponentialRampToValueAtTime(0.001, now + dur); // decay
+
+        // Connections
+        noise.connect(filter).connect(gain).connect(audioCtx.destination);
+
+        // Start
+        noise.start();
+        noise.stop(now + dur);
+      }
+
+      function playSpin(dur) {
+        const now = audioCtx.currentTime;
+
+        // Base oscillator (engine/flywheel tone)
+        const osc = audioCtx.createOscillator();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(100, now); // starting pitch
+        osc.frequency.exponentialRampToValueAtTime(300, now + dur * 0.4); // spin-up to high pitch
+        osc.frequency.setValueAtTime(300, now + dur * 0.6); // starting pitch
+        osc.frequency.exponentialRampToValueAtTime(100, now + dur); // spin-up to high pitch
+
+        const noise = noiseS();
+
+        const noiseFilter = audioCtx.createBiquadFilter();
+        noiseFilter.type = "highpass";
+        noiseFilter.frequency.value = 400; // airy whirr
+
+        // Gain envelope (fade-in and sustain)
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(0.2, now + dur * 0.4); // fade in
+        gain.gain.setValueAtTime(0.2, now + dur * 0.6);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + dur); // fade out
+
+        // Connect chain
+        osc.connect(gain);
+        noise.connect(noiseFilter).connect(gain);
+        gain.connect(audioCtx.destination);
+
+        // Start/stop
+        osc.start(now);
+        noise.start(now);
+        osc.stop(now + dur);
+        noise.stop(now + dur);
+      }
+
+      function playCollide(dur) {
+        const now = audioCtx.currentTime;
+
+        const noise = noiseS();
+
+        const noiseGain = audioCtx.createGain();
+        noiseGain.gain.setValueAtTime(0.4, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+        noise.connect(noiseGain).connect(audioCtx.destination);
+        noise.start(now);
+        noise.stop(now + dur);
+      }
+
+      function nay(dur, off = 0, fr = 600, fre = 400, rep = 10) {
+        const now = audioCtx.currentTime + off;
+
+        // Base vocal oscillator
+        const osc = audioCtx.createOscillator();
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(400, now); // base pitch (~cat meow)
+        osc.frequency.exponentialRampToValueAtTime(fr, now + dur * 0.2); // upward screech
+        osc.frequency.linearRampToValueAtTime(fre, now + dur * 0.8); // then settle
+
+        // First formant filter (throat resonance)
+        const formant1 = audioCtx.createBiquadFilter();
+        formant1.type = "bandpass";
+        formant1.frequency.value = 1000; // resonance frequency
+        formant1.Q.value = 4;
+
+        // Second formant filter (mouth resonance)
+        const formant2 = audioCtx.createBiquadFilter();
+        formant2.type = "bandpass";
+        formant2.frequency.value = 2500;
+        formant2.Q.value = 6;
+
+        // Add jittery modulation (for angry instability)
+        const lfo = audioCtx.createOscillator();
+        lfo.frequency.value = rep; // jitter speed
+        const lfoGain = audioCtx.createGain();
+        lfoGain.gain.value = 40; // +/- Hz
+        lfo.connect(lfoGain).connect(osc.frequency);
+        lfo.start(now);
+
+        // Amplitude envelope
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.exponentialRampToValueAtTime(5.0, now + dur * 0.05); // quick attack
+        gain.gain.setValueAtTime(4.0, now + dur * 0.5); // sustain
+        gain.gain.exponentialRampToValueAtTime(0.001, now + dur * 1.2); // decay
+
+        // Connect chain: osc -> formants -> gain -> out
+        osc
+          .connect(formant1)
+          .connect(formant2)
+          .connect(gain)
+          .connect(audioCtx.destination);
+
+        // Start/stop
+        osc.start(now);
+        osc.stop(now + dur);
+      }
+
+      function yowl(dur) {
+        mew(dur, dur, 0, 600, 400, 30);
+        mew(dur - 0.1, dur, 0.1, 800, 1000, 30);
+        mew(dur - 0.2, dur, 0.2, 200, 500, 20);
+        mew(dur - 0.5, dur, 0.4, 500, 100, 10);
+        mew(dur - 0.2, dur, 0, 500, 1200, 40);
+      }
+
+      function squeak() {
+        // Main oscillator for squeak
+        const osc = audioCtx.createOscillator();
+        osc.type = "sawtooth"; // rough and raspy
+
+        // Gain for volume shaping
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+
+        // Low-pass filter to give resonance
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(200, audioCtx.currentTime);
+
+        // Connect nodes
+        osc.connect(filter).connect(gain).connect(audioCtx.destination);
+
+        // Frequency starts low then wiggles around
+        osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+        for (let i = 0; i < 10; i++) {
+          let t = audioCtx.currentTime + i * 0.3;
+          let freq = 100 + Math.random() * 100; // random squeak pitch
+          osc.frequency.linearRampToValueAtTime(freq, t + 0.25);
+        }
+
+        // Slowly raise gain (as if opening further)
+        gain.gain.linearRampToValueAtTime(0.2, audioCtx.currentTime + 0.5);
+        gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 3.5);
+
+        // Filter sweep for resonance change
+        filter.frequency.linearRampToValueAtTime(
+          1000,
+          audioCtx.currentTime + 3.5,
+        );
+
+        // Start and stop
+        osc.start(audioCtx.currentTime);
+        osc.stop(audioCtx.currentTime + 4);
+      }
+
+      function playGallop(l = 1) {
+        let t = audioCtx.currentTime;
+        playHoof(t, 0.6, 0.85);
+        playHoof(t + l * 0.05, 1, 1);
+        playHoof(t + l * 0.2, 0.8, 1.15);
+      }
+      function playTrot(l = 0.5) {
+        let t = audioCtx.currentTime;
+        playHoof(t, 0.6, 1.1);
+        playHoof(t + l * 0.25, 0.5, 0.9);
+        playHoof(t + l * 0.55, 0.5, 0.9);
+        playHoof(t + l * 0.75, 0.6, 1);
+      }
+
+      function playHorseNeigh(startTime = audioCtx.currentTime) {
+        const duration = 0.55; // Nickers are short and muted
+
+        // 1. LOW VOCAL CHATTER
+        const osc = audioCtx.createOscillator();
+        const oscGain = audioCtx.createGain();
+        osc.type = "triangle"; // Muted, warm timbre
+
+        // Low frequency contour (stays down in the 120Hz – 240Hz range)
+        const f0 = osc.frequency;
+        f0.setValueAtTime(140, startTime);
+        f0.exponentialRampToValueAtTime(230, startTime + 0.1);
+        f0.exponentialRampToValueAtTime(180, startTime + duration);
+
+        // Rapid low-amplitude tremolo/flutter
+        const lfo = audioCtx.createOscillator();
+        const lfoGain = audioCtx.createGain();
+        lfo.frequency.setValueAtTime(18, startTime); // Fast flutter (18 Hz)
+        lfoGain.gain.setValueAtTime(25, startTime); // Subtle pitch width
+        lfo.connect(f0);
+
+        // Gentle Volume Envelope
+        oscGain.gain.setValueAtTime(0.001, startTime);
+        oscGain.gain.linearRampToValueAtTime(0.25, startTime + 0.08);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+        // Lowpass filter to keep it muffled/throaty
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "lowpass";
+        filter.frequency.setValueAtTime(450, startTime);
+
+        osc.connect(oscGain);
+        oscGain.connect(filter);
+        filter.connect(audioCtx.destination);
+
+        // Trigger
+        lfo.start(startTime);
+        osc.start(startTime);
+
+        lfo.stop(startTime + duration);
+        osc.stop(startTime + duration);
+      }
+
+      function playHoof(time, volume = 1.0, pitch = 1) {
+        const osc = audioCtx.createOscillator();
+        const oscGain = audioCtx.createGain();
+        if (!time) time = audioCtx.currentTime;
+
+        // Low-frequency impact body
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(120 * pitch, time);
+        osc.frequency.exponentialRampToValueAtTime(30 * pitch, time + 0.08);
+
+        oscGain.gain.setValueAtTime(0.8 * volume, time);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, time + 0.08);
+
+        osc.connect(oscGain);
+        oscGain.connect(audioCtx.destination);
+
+        // Bandpass filter to sculpt the impact surface sound
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(800 * pitch, time);
+        filter.Q.setValueAtTime(1.5, time);
+
+        const noiseGain = audioCtx.createGain();
+        noiseGain.gain.setValueAtTime(0.5 * volume, time);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, time + 0.05);
+
+        noiseS().connect(filter);
+        filter.connect(noiseGain);
+        noiseGain.connect(audioCtx.destination);
+
+        // 3. Trigger nodes
+        osc.start(time);
+        osc.stop(time + 0.09);
+
+        noiseSource.start(time);
+        noiseSource.stop(time + 0.06);
+      }
+    </script>
+  </body>
+</html>
