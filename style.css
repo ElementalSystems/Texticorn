@@ -31,6 +31,7 @@ body {
 .scene {
   width: 100vw;
   height: 100vh;
+  z-index: 0;
   position: absolute;
   box-sizing: border-box;
   perspective: 800px;
@@ -160,6 +161,14 @@ body {
   }
 }
 
+.wall,
+.dlayer,
+.letter {
+  /* Isolates rendering boundaries so child transforms don't force full-page reflows */
+  contain: layout style;
+  -webkit-font-smoothing: antialiased;
+}
+
 .map {
   font-size: 20rem;
   line-height: 1.1;
@@ -184,7 +193,8 @@ body {
   transform-origin: left top;
 
   min-width: 100%;
-  transform: translate3d(50vw, 50vh, 1rem) rotateZ(calc(var(--viewRZ) * 90deg))
+  transform: translate3d(50vw, 50vh, 0.1rem)
+    rotateZ(calc(var(--viewRZ) * 90deg))
     scale3d(var(--viewS, 1), var(--viewS, 1), 1)
     translate3d(
       calc(((var(--viewX, 0) * var(--gridX) + var(--gridX)) * -1)),
@@ -230,6 +240,7 @@ body {
 
   .wall {
     position: absolute;
+
     top: 0;
     left: 0;
     transform: translateX(calc(var(--col, 0) * var(--gridX)));

@@ -16,7 +16,6 @@
  *  * fix end of game running sprites
  *  * Speech bubble (control the curve text - no layers)
  *  * Sound
- *  * Mobile redraw issues and ZOOM (1)
  *
  * game/ctl
  *     - unlocking levels (3)
