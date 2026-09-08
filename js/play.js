@@ -1,8 +1,7 @@
 //TODO: The List
 /*
  * Design
- *  * Level design (2)
- *    * 3 - harder - in between cutie !REQ
+ *  * Level design (1)
  *    * 4 - arena-like - round and round - Fix Up !REQ
  *  * Level menu and narrow screens
  *
@@ -12,8 +11,7 @@
  *
  * Technical
  *  * Speech bubble (control the curve text - no layers)
- *  * Sound !REQ
- *     * music
+ *
  *
  * game/ctl
  */

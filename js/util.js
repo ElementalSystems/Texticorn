@@ -11,6 +11,8 @@ const inter = (r, st, end, func = id) => {
 };
 
 rnd = (s, e) => s + ((Math.random() * (e - s + 1)) | 0);
+randA = (a) => a[Math.floor(Math.random() * a.length)]; //select a random element of array
+ranR = (s, e) => s + Math.random() * (e - s); //random in range s to e smooth
 
 //array handling
 const fillFrom = (s, t) => s.forEach((v, i) => (t[i] = t[i] ?? s[i]));

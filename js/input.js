@@ -94,6 +94,7 @@ mkCtls = (par, endLevel) => {
       document.getElementById("title").textContent = levs[li].title;
       this.cli = li;
       this.status = 0;
+      pChimes(levs[li].m);
       return this.start();
     },
 
@@ -149,6 +150,7 @@ mkCtls = (par, endLevel) => {
       this.map.doFollow();
     },
     exit() {
+      pChimes();
       endLevel();
     },
     end() {
