@@ -50,7 +50,7 @@ body {
   animation: menuFadeIn 1s ease forwards;
 
   &.hide {
-    animation: menuFadeOut 2s ease forwards;
+    animation: menuFadeOut 0.5s ease forwards;
   }
   z-index: 1;
 
@@ -110,6 +110,7 @@ body {
 @keyframes menuFadeOut {
   0% {
     opacity: 1;
+    pointer-events: none;
     display: flex;
   }
   99% {
@@ -129,6 +130,7 @@ body {
   }
   100% {
     opacity: 1;
+    pointer-events: all;
     display: flex;
   }
 }

@@ -88,6 +88,7 @@ mkCtls = (par, endLevel) => {
       return this.anyDown(kmap[d % 2][c]);
     },
     startUp(li) {
+      console.log("startup", li);
       document.getElementById("tl1").textContent = "<" + levs[li].time1 + "s";
       document.getElementById("tl2").textContent = "<" + levs[li].time2 + "s";
       document.getElementById("title").textContent = levs[li].title;
@@ -97,6 +98,7 @@ mkCtls = (par, endLevel) => {
     },
 
     start(go) {
+      console.log("start", this.cli, go);
       document.getElementById("bst").textContent = lastT(this.cli);
       document.getElementById("scene").innerHTML = "";
       this.status = 0; //new game
@@ -127,6 +129,7 @@ mkCtls = (par, endLevel) => {
       this.przCount += 1;
     },
     pause() {
+      console.log("pause");
       this.timerOn = false;
       this.updateTB();
       this.topbar.classList.toggle("closed", false);
@@ -135,6 +138,7 @@ mkCtls = (par, endLevel) => {
       this.map.setVPW(this.map.gridYF);
     },
     cont() {
+      console.log("continue");
       this.status = 1;
       this.timerOn = true;
       this.updateTB();

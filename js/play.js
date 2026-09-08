@@ -1,7 +1,7 @@
 //TODO: The List
 /*
  * Design
- *  * Level design
+ *  * Level design (2)
  *    * 3 - harder - in between cutie !REQ
  *    * 4 - arena-like - round and round - Fix Up !REQ
  *  * Level menu and narrow screens
@@ -11,17 +11,16 @@
  * Map
  *
  * Technical
- *   * start Up bug
  *  * Speech bubble (control the curve text - no layers)
- *  * Sound (3) !REQ
- *     * hoof beat
+ *  * Sound !REQ
+ *     * music
  *
  * game/ctl
  */
 
 async function start() {
   buildScreen();
-  //play(0);
+  //play(3);
   //sshowSprite(uni, "fd fd fx");
 }
 
