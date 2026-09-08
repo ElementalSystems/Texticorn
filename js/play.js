@@ -18,7 +18,7 @@
 
 async function start() {
   buildScreen();
-  //play(3);
+  //play(4);
   //sshowSprite(uni, "fd fd fx");
 }
 
