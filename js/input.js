@@ -1,4 +1,4 @@
-mkCtl = (par, text, clk) => {
+mkCtl = (par, text, dn, up) => {
   const c = {
     el: document.createElement("div"),
     down: 0,
@@ -15,10 +15,13 @@ mkCtl = (par, text, clk) => {
   c.el.addEventListener("pointerdown", (e) => {
     c.el.setPointerCapture(e.pointerId); // Captures release events even off-element
     setActive(true);
-    clk?.();
+    dn?.();
   });
 
-  c.el.addEventListener("pointerup", () => setActive(false));
+  c.el.addEventListener("pointerup", () => {
+    setActive(false);
+    up?.();
+  });
 
   // Revert if interaction is interrupted (e.g., system gesture, call, drag cancel)
   c.el.addEventListener("pointercancel", () => setActive(false));
@@ -34,9 +37,13 @@ mkCtls = (par, endLevel) => {
     ld: mkCtl(par, "↙"),
     lu: mkCtl(par, "↖"),
     l: mkCtl(par, "←"),
-    c: mkCtl(par, "☰", () => {
-      ctl.pause();
-    }),
+    c: mkCtl(par, "☰", () => ctl.pause()),
+    v: mkCtl(
+      par,
+      "⛶",
+      () => ctl.showF(),
+      () => ctl.hideF(),
+    ),
     r: mkCtl(par, "→"),
     ru: mkCtl(par, "↗"),
     rd: mkCtl(par, "↘"),
@@ -128,6 +135,22 @@ mkCtls = (par, endLevel) => {
     },
     tkPrz() {
       this.przCount += 1;
+    },
+    showF() {
+      this.timerOn = false;
+      this.updateTB();
+      this.base.classList.toggle("disable", true);
+      this.map.lookAt(this.map.gridXF / 2, this.map.gridYF / 2);
+      this.map.setVPW(this.map.gridYF);
+    },
+    hideF() {
+      this.timerOn = true;
+      this.updateTB();
+      this.base.focus();
+      this.topbar.classList.toggle("closed", true);
+      this.base.classList.toggle("disable", false);
+      this.map.setVPW(6);
+      this.map.doFollow();
     },
     pause() {
       console.log("pause");

@@ -16,18 +16,18 @@ buildLevelMenu = (p, sl) => {
       });
     },
     show: () => {
-      p.style.display = "";
-      p.classList.toggle("hide", false);
+      console.log("Show");
+      p.parentElement.classList.toggle("hide", false);
     },
     hide: () => {
-      p.classList.toggle("hide", true);
-      setTimeout(() => (p.style.display = "none"), 500);
+      p.parentElement.classList.toggle("hide", true);
+      setTimeout(() => (p.parentElement.style.display = "none"), 500);
     },
   };
 };
 
 buildScreen = () => {
-  const menu = buildLevelMenu(document.getElementById("menu"), (li) => {
+  const menu = buildLevelMenu(document.getElementById("menui"), (li) => {
     document.documentElement.requestFullscreen();
     ctls.startUp(li);
     menu.hide();

@@ -1,14 +1,18 @@
 //TODO: The List
 /*
  * Design
+ *  * Title Screen (1) - left and right absolute text; escape from current menu html
+ *  * Princess (3)
  *
  *  * Sprites
+ *      * Final Colours Flip and Bridge and prize (2)
+ *      * Back legs!!
+ *      * Final Colours unicorn?
  *
  * Map
- *   *remove grid
  *
  * Technical
- *  * Set up js13k account
+ *  * Tidy up
  *  * Speech bubble (control the curve text - no layers)
  *
  *
