@@ -5,8 +5,10 @@
  *  * Sprites
  *
  * Map
+ *   *remove grid
  *
  * Technical
+ *  * Set up js13k account
  *  * Speech bubble (control the curve text - no layers)
  *
  *

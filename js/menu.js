@@ -15,8 +15,14 @@ buildLevelMenu = (p, sl) => {
         p.appendChild(ctl);
       });
     },
-    show: () => p.classList.toggle("hide", false),
-    hide: () => p.classList.toggle("hide", true),
+    show: () => {
+      p.style.display = "";
+      p.classList.toggle("hide", false);
+    },
+    hide: () => {
+      p.classList.toggle("hide", true);
+      setTimeout(() => (p.style.display = "none"), 500);
+    },
   };
 };
 
