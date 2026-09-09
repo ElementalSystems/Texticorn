@@ -22,6 +22,7 @@ buildLevelMenu = (p, sl) => {
 
 buildScreen = () => {
   const menu = buildLevelMenu(document.getElementById("menu"), (li) => {
+    document.documentElement.requestFullscreen();
     ctls.startUp(li);
     menu.hide();
   });

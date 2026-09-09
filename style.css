@@ -92,7 +92,7 @@ body {
     color: #fff;
     text-align: center;
     width: 50vw;
-    font-size: 3rem;
+    font-size: 2.5rem;
     border-radius: 10vh;
     padding: 1rem 5rem;
     cursor: pointer;
@@ -528,7 +528,7 @@ pre {
   }
 
   div {
-    font-size: min(4vw, 4vh);
+    font-size: 4rem;
     width: 1lh;
     text-align: center;
     padding: 0.5em;

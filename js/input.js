@@ -31,15 +31,15 @@ mkCtl = (par, text, clk) => {
 
 mkCtls = (par, endLevel) => {
   const buts = {
-    ld: mkCtl(par, "⇙"),
-    lu: mkCtl(par, "⇖"),
-    l: mkCtl(par, "⇐"),
+    ld: mkCtl(par, "↙"),
+    lu: mkCtl(par, "↖"),
+    l: mkCtl(par, "←"),
     c: mkCtl(par, "☰", () => {
       ctl.pause();
     }),
-    r: mkCtl(par, "⇒"),
-    ru: mkCtl(par, "⇗"),
-    rd: mkCtl(par, "⇘"),
+    r: mkCtl(par, "→"),
+    ru: mkCtl(par, "↗"),
+    rd: mkCtl(par, "↘"),
   };
 
   const kmap = [

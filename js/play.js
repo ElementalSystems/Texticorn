@@ -1,9 +1,6 @@
 //TODO: The List
 /*
  * Design
- *  * Level design (1)
- *    * 4 - arena-like - round and round - Fix Up !REQ
- *  * Level menu and narrow screens
  *
  *  * Sprites
  *
