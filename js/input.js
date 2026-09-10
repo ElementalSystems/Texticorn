@@ -158,6 +158,7 @@ mkCtls = (par, endLevel) => {
       this.updateTB();
       this.topbar.classList.toggle("closed", false);
       this.base.classList.toggle("disable", true);
+      this.map.base.classList.toggle("paused", true);
       this.map.lookAt(this.map.gridXF / 2, this.map.gridYF / 2);
       this.map.setVPW(this.map.gridYF);
     },
@@ -169,6 +170,7 @@ mkCtls = (par, endLevel) => {
       this.base.focus();
       this.topbar.classList.toggle("closed", true);
       this.base.classList.toggle("disable", false);
+      this.map.base.classList.toggle("paused", false);
       this.map.setVPW(6);
       this.map.doFollow();
     },

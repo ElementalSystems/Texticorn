@@ -1,3 +1,9 @@
+@property --extra {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
 html,
 body {
   font-family: sans-serif;
@@ -174,14 +180,14 @@ body {
 
 .map {
   font-size: 20rem;
-  line-height: 1.2;
+  line-height: calc(1.2 * var(--extra, 1));
 
   --zHeight: 5rem;
   --dct: #fff;
   --dcb: #000;
   position: relative;
 
-  --gridX: calc(1ch * 1);
+  --gridX: calc(1ch * var(--extra, 1));
   --gridY: calc(1lh / 2);
   --gridXO: calc(var(--gridX) / 2);
   background-size: var(--gridX) var(--gridY);
@@ -204,12 +210,18 @@ body {
       calc((var(--viewY, 0) * var(--gridY) + var(--gridXO)) * -1),
       0rem
     );
-
-  /* Pin both layers directly to the top-left edge of the box */
   background-position: var(--gridXO) 0;
   background-image:
     linear-gradient(to right, rgba(0, 0, 0, 0.15) 2px, transparent 2px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 2px, transparent 2px);
+  --extra: 1;
+  transition: --extra 2s ease-in;
+
+  &.paused {
+    --extra: 1.5;
+    transition: --extra 5s ease-in;
+  }
+
   .ga {
     border-radius: 0 50% 50% 50%;
     top: calc(var(--gridY) / 2);
