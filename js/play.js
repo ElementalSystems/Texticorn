@@ -1,11 +1,9 @@
 //TODO: The List
 /*
  * Design
- *  * Title Screen (1) - left and right absolute text; escape from current menu html
- *  * Princess (3)
+ *   * Princess (3)
  *
  *  * Sprites
- *      * Final Colours Flip and Bridge and prize (2)
  *      * Back legs!!
  *      * Final Colours unicorn?
  *

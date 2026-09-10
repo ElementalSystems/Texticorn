@@ -294,7 +294,7 @@ const prz = {
     {
       text: "★PRIZE★",
       style: "rbow",
-      layers: 3,
+      layers: 0,
       pos: [
         [-3, 2, 0, 2, 3, 2, 1, 1, 1],
         [, , , , , , 1, 2, 1],
@@ -389,7 +389,7 @@ const ext = {
   style: "ext arch",
   bits: [
     {
-      text: ">>>>NEXT COLOUR>>>>",
+      text: ">>>>PROGRESSION>>>>",
       style: "rbow",
       layers: 1,
       pos: [

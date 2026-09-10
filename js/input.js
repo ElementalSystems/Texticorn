@@ -173,6 +173,7 @@ mkCtls = (par, endLevel) => {
       this.map.doFollow();
     },
     exit() {
+      console.log("exit pressed");
       pChimes();
       endLevel();
     },

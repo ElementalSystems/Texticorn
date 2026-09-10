@@ -5,7 +5,7 @@ body {
   height: 100%;
   overflow: clip;
   font-size: min(1.5vh, 1.5vw);
-  background-color: #0aa;
+  background-color: #fff;
 
   --cT0: #000;
   --cT1: #f00;
@@ -87,7 +87,8 @@ body {
     justify-content: space-around;
     align-items: center;
   }
-  #title {
+
+  #gn {
     writing-mode: vertical-rl;
     font-size: 10rem;
     color: #000a;
@@ -134,15 +135,9 @@ body {
   0% {
     opacity: 1;
     pointer-events: none;
-    display: flex;
-  }
-  99% {
-    opacity: 0;
-    display: flex;
   }
   100% {
     opacity: 0;
-    display: none;
   }
 }
 
@@ -368,6 +363,8 @@ pre {
   }
   .head {
     font-size: 1.2rem;
+    color: #fff;
+    --dct: #0008;
   }
   .tail {
     color: #000;
@@ -379,20 +376,25 @@ pre {
 
 .prz {
   --zHeight: 1rem;
-  font-size: 1.5rem;
-  --dct: #fff8;
+  font-size: 2.5rem;
+  font-weight: bold;
+  --dct: #fff2;
+  .c {
+    color: #0005;
+    font-size: 0.7rem;
+  }
 }
 
 .ext {
   --zHeight: 0.5rem;
-  font-size: 2rem;
-  --dct: #fffa;
+  font-size: 2.5rem;
+  font-weight: bolder;
+  --dct: #fff4;
 }
 
 .brg {
   --zHeight: 1rem;
   font-size: 2rem;
-  --dct: #fff;
   color: #000;
   font-weight: bold;
 }

@@ -17,6 +17,7 @@ buildLevelMenu = (p, sl) => {
     },
     show: () => {
       console.log("Show");
+      p.parentElement.style.display = "inherit";
       p.parentElement.classList.toggle("hide", false);
     },
     hide: () => {
