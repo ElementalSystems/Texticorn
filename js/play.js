@@ -1,13 +1,16 @@
 //TODO: The List
 /*
+ * Last Shit:
+ *     * Controls delay/reset thing (fri)
+ *     * Open / close in pause mode
  * Design
  *   * Princess (3)
  *
  *  * Sprites
- *      * Back legs!!
+ *      * Back legs!! (1)
  *      * Final Colours unicorn?
  *
- * Map
+ * Maps *add deco chars?
  *
  * Technical
  *  * Tidy up

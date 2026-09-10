@@ -174,7 +174,7 @@ body {
 
 .map {
   font-size: 20rem;
-  line-height: 1;
+  line-height: 1.2;
 
   --zHeight: 5rem;
   --dct: #fff;
