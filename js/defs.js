@@ -36,7 +36,7 @@ const uni = {
       ],
     },
     {
-      text: "○≡≡≡≡○====>>",
+      text: "8RUMP○====>>",
       style: "limb f rear",
       layers: 1,
       pos: [
@@ -53,7 +53,7 @@ const uni = {
       ],
     },
     {
-      text: "○≡≡≡≡○====>>",
+      text: "8RUMP○====>>",
       style: "limb b rear",
       layers: 1,
       pos: [

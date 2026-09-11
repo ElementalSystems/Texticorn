@@ -1,7 +1,6 @@
 //TODO: The List
 /*
  * Last Shit:
- *     * Controls delay/reset thing (fri)
  *
  * Design
  *  * Princess (3)
