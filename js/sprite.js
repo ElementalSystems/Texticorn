@@ -145,11 +145,6 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
     if (!ctl.timerOn) return "p";
     if (flp(s, 0, 0) && sol(s, 1, 1)) return "f"; //can always flip from a bridge into rock
     if (ctl.act("b", s.cry)) return "tb"; //can always turn
-    if (ctl.act("f", s.cry) && sol(s, 1, 1) && emp(s, 1, 0)) return "fd";
-    if (ctl.act("f", s.cry) && stk(s, 0, 0) && sol(s, 1, 0) && !fsol(s, 1, 0))
-      return "ru";
-    if (ctl.act("f", s.cry) && stk(s, 0, 0) && emp(s, 1, 1) && stk(s, 1, 1))
-      return "rd";
 
     if (ctl.act("u", s.cry) && sol(s, 1, 0) && emp(s, 1, -1)) return "u1";
     if (ctl.act("u", s.cry) && sol(s, 2, 0) && emp(s, 2, -1)) return "u1l";
@@ -203,6 +198,12 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
       emp(s, 2, 3)
     )
       return "d3";
+    if (ctl.act("f", s.cry) && sol(s, 1, 1) && emp(s, 1, 0)) return "fd";
+    if (ctl.act("f", s.cry) && stk(s, 0, 0) && sol(s, 1, 0) && !fsol(s, 1, 0))
+      return "ru";
+    if (ctl.act("f", s.cry) && stk(s, 0, 0) && emp(s, 1, 1) && stk(s, 1, 1))
+      return "rd";
+
     //no more legal moves
     //if we're holding controls we can deny
     if (ctl.act("f", s.cry)) return "fx";

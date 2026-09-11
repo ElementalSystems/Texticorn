@@ -139,16 +139,18 @@ mkCtls = (par, endLevel) => {
     showF() {
       this.timerOn = false;
       this.updateTB();
-      this.base.classList.toggle("disable", true);
+      this.base.classList.toggle("hide", true);
+      this.topbar.classList.toggle("hide", true);
       this.map.lookAt(this.map.gridXF / 2, this.map.gridYF / 2);
-      this.map.setVPW(this.map.gridYF);
+      this.map.setVPW(this.map.gridYF + 3);
     },
     hideF() {
       this.timerOn = true;
       this.updateTB();
       this.base.focus();
       this.topbar.classList.toggle("closed", true);
-      this.base.classList.toggle("disable", false);
+      this.topbar.classList.toggle("hide", false);
+      this.base.classList.toggle("hide", false);
       this.map.setVPW(6);
       this.map.doFollow();
     },
@@ -160,7 +162,7 @@ mkCtls = (par, endLevel) => {
       this.base.classList.toggle("disable", true);
       this.map.base.classList.toggle("paused", true);
       this.map.lookAt(this.map.gridXF / 2, this.map.gridYF / 2);
-      this.map.setVPW(this.map.gridYF);
+      this.map.setVPW(this.map.gridYF + 2);
     },
     cont() {
       console.log("continue");

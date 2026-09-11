@@ -2,9 +2,9 @@
 /*
  * Last Shit:
  *     * Controls delay/reset thing (fri)
- *     * Open / close in pause mode
+ *
  * Design
- *   * Princess (3)
+ *  * Princess (3)
  *
  *  * Sprites
  *      * Back legs!! (1)

@@ -211,14 +211,14 @@ body {
       0rem
     );
   background-position: var(--gridXO) 0;
-  background-image:
+  background-imagex:
     linear-gradient(to right, rgba(0, 0, 0, 0.15) 2px, transparent 2px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 2px, transparent 2px);
   --extra: 1;
   transition: --extra 2s ease-in;
 
   &.paused {
-    --extra: 1.5;
+    --extra: 1.3;
     transition: --extra 5s ease-in;
   }
 
@@ -406,7 +406,7 @@ pre {
 .brg {
   --zHeight: 1rem;
   font-size: 2rem;
-  color: #000;
+  color: #fff4;
   font-weight: bold;
 }
 
@@ -502,6 +502,10 @@ pre {
   }
 }
 
+#topbar.hide {
+  display: none;
+}
+
 #topbar.closed {
   #cmds {
     display: none;
@@ -525,6 +529,9 @@ pre {
   &.disable {
     opacity: 0.1;
     pointer-events: none;
+  }
+  &.hide {
+    opacity: 0.1;
   }
   position: absolute;
   bottom: 0.25rem;
