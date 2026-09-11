@@ -141,20 +141,20 @@ const uni = {
   moves: {
     1: [
       //idle
-      {t: 200, ts: 1},
+      {t: 300, ts: 1},
     ],
     2: [
       //idle
-      {t: 200, ts: 0},
+      {t: 400, ts: 0},
     ],
     3: [
       //idle
-      {t: 100, ts: 8, tx: 0.02, ty: 0.02},
+      {t: 200, ts: 8, tx: 0.02, ty: 0.02},
       {t: 100, ts: 8, tx: 0, ty: 0},
     ],
     i: [
       //idle
-      {t: 200, ts: 9, sVP: 15},
+      {t: 500, ts: 9, sVP: 15},
     ],
     p: [
       //game paused

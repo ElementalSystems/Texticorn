@@ -2,6 +2,9 @@ mkCtl = (par, text, dn, up) => {
   const c = {
     el: document.createElement("div"),
     down: 0,
+    dtime: 0,
+    utime: 0,
+    wasDown: 0,
   };
   c.el.textContent = text;
   c.el.classList.add("ctl");
@@ -10,6 +13,8 @@ mkCtl = (par, text, dn, up) => {
   const setActive = (v) => {
     c.el.classList.toggle("active", v);
     c.down = v;
+    if (v) c.dtime = Date.now();
+    else c.utime = Date.now();
   };
 
   c.el.addEventListener("pointerdown", (e) => {
@@ -68,11 +73,19 @@ mkCtls = (par, endLevel) => {
   //attach keyboard to parent
   par.onkeydown = function (e) {
     e = e || window.event;
-    buts[e.keyCode] = {down: true};
+    buts[e.keyCode] = {
+      ...buts[e.keyCode],
+      down: true,
+      dtime: Date.now(),
+    };
   };
   par.onkeyup = function (e) {
     e = e || window.event;
-    buts[e.keyCode] = {down: false};
+    buts[e.keyCode] = {
+      ...buts[e.keyCode],
+      down: false,
+      utime: Date.now(),
+    };
   };
   par.focus();
   const ctl = {
@@ -83,19 +96,58 @@ mkCtls = (par, endLevel) => {
     przCount: 0,
     stTime: 0,
     time: 0,
+    wasDownTime: 0,
     timerOn: false,
     status: 0, //new level
     down(i) {
-      return !!this.buts[i]?.down;
+      return !!(this.buts[i]?.down || this.buts[i]?.wasDown);
     },
     anyDown(a) {
       return a.some((i) => this.down(i));
     },
+    setWasDown() {
+      //first check through them hoping for a currently active
+      let bl = [
+        65,
+        37,
+        "l",
+        "lu",
+        "ld",
+        68,
+        39,
+        "r",
+        87,
+        38,
+        "ru",
+        83,
+        40,
+        "rd",
+      ];
+      let dc = 0,
+        maxt = 0,
+        maxi = "";
+      bl.forEach((i) => {
+        let b = this.buts[i];
+        if (!b) return;
+        if (b.down) {
+          b.wasDown = true;
+          dc += 1;
+        } else {
+          b.wasDown = false;
+          if (b.utime > maxt) {
+            maxt = b.utime;
+            maxi = i;
+          }
+        }
+      });
+      if (!dc && maxt > this.wasDownTime) this.buts[maxi].wasDown = true; //if nothing is currently down look at the last one
+      this.wasDownTime = Date.now();
+    },
+
     act(c, d) {
       return this.anyDown(kmap[d % 2][c]);
     },
     startUp(li) {
-      console.log("startup", li);
       document.getElementById("tl1").textContent = "<" + levs[li].time1 + "s";
       document.getElementById("tl2").textContent = "<" + levs[li].time2 + "s";
       document.getElementById("title").textContent = levs[li].title;
@@ -106,7 +158,6 @@ mkCtls = (par, endLevel) => {
     },
 
     start(go) {
-      console.log("start", this.cli, go);
       document.getElementById("bst").textContent = lastT(this.cli);
       document.getElementById("scene").innerHTML = "";
       this.status = 0; //new game
@@ -155,7 +206,6 @@ mkCtls = (par, endLevel) => {
       this.map.doFollow();
     },
     pause() {
-      console.log("pause");
       this.timerOn = false;
       this.updateTB();
       this.topbar.classList.toggle("closed", false);
@@ -165,7 +215,6 @@ mkCtls = (par, endLevel) => {
       this.map.setVPW(this.map.gridYF + 2);
     },
     cont() {
-      console.log("continue");
       this.status = 1;
       this.timerOn = true;
       this.updateTB();
@@ -177,7 +226,6 @@ mkCtls = (par, endLevel) => {
       this.map.doFollow();
     },
     exit() {
-      console.log("exit pressed");
       pChimes();
       endLevel();
     },

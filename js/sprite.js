@@ -219,10 +219,11 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
 
   let mom = 0;
   let uniE = addSprite(uni, map, gx, gy, rz, is, (s) => {
+    ctl.setWasDown();
     const m = sA(s);
     //lets change momentum.
     if (["fd", "ru", "rd", "jf"].includes(m)) mom = clamp(0, 5, mom + 1);
-    if (["u2", "d3", "f"].includes(m)) mom = clamp(0, 5, mom - 2);
+    if (["u2", "d3", "f"].includes(m)) mom = clamp(0, 5, mom - 1);
     if (["i", "tb", "ux", "dx", "fx", "x"].includes(m)) mom = 0;
 
     //set the timescale

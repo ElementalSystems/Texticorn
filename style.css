@@ -214,12 +214,12 @@ body {
   background-imagex:
     linear-gradient(to right, rgba(0, 0, 0, 0.15) 2px, transparent 2px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 2px, transparent 2px);
-  --extra: 1;
-  transition: --extra 2s ease-in;
+  --extra: 0.95;
+  transition: --extra 1s ease-in;
 
   &.paused {
-    --extra: 1.3;
-    transition: --extra 5s ease-in;
+    --extra: 1.2;
+    transition: --extra 1s ease-in;
   }
 
   .ga {
