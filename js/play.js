@@ -4,7 +4,7 @@
  * * Princess (3)
  * * de corn
  *
- * Maps *add deco chars (4)
+ * Maps
  *
  * Tidy Code (5)
  *
