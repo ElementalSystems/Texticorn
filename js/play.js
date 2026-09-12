@@ -1,28 +1,19 @@
 //TODO: The List
 /*
  * Last Shit:
+ * * Princess (3)
+ * * de corn
  *
- * Design
- *  * Princess (3)
+ * Maps *add deco chars (4)
  *
- *  * Sprites
- *      * Back legs!! (1)
- *      * Final Colours unicorn?
+ * Tidy Code (5)
  *
- * Maps *add deco chars?
- *
- * Technical
- *  * Tidy up
- *  * Speech bubble (control the curve text - no layers)
- *
- *
- * game/ctl
  */
 
 async function start() {
   buildScreen();
   //play(4);
-  //sshowSprite(uni, "fd fd fx");
+  //showSprite(uni, "fd fd fx");
 }
 
 function play(li) {
@@ -44,9 +35,9 @@ async function showSprite(config, mn) {
   );
   //addGridDisplay(map);
   //map.base.style.setProperty("--viewS", 0.75);
-  map.setVPW(8);
+  map.setVPW(4);
 
-  map.setCamera(6, 3, 0);
+  map.setCamera(8, 1, 0);
   config.bits[0].pos.forEach((_, i) => addSprite(config, map, i + 1, 1, 0, i));
   if (mn) {
     let t = addSprite(config, map);

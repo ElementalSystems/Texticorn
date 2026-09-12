@@ -126,7 +126,7 @@ const mkWalls = (map, text) => {
     e.innerHTML = lines
       .map((l) => l[c] ?? " ")
       .join("\n")
-      .replace(/[?&*↓→]/g, "<span class=deco>$&</span>");
+      .replace(/[?&*↓→:~<>.]/g, "<span class=deco>$&</span>");
     map.base.appendChild(e);
     e.style.setProperty("--col", c);
     buildDepth(e, 5);

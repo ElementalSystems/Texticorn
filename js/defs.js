@@ -36,37 +36,37 @@ const uni = {
       ],
     },
     {
-      text: "8RUMP○====>>",
+      text: "*RUMPO====>>",
       style: "limb f rear",
       layers: 1,
       pos: [
-        [-1, 0, -4, 0, -2, 4.5, 1, 1, 1], //stand
-        [, , , , -1.5, 4], //alt stand
-        [-3, 2, -5, 4, -1],
-        [-2, 0, , 3, -6, 2], //spread
-        [-2, 0, , 2, -6, 1], //spread (alt)
-        [-2, 0, , 3, -6, -1], //land
-        [, , , , -1], //trot
-        [, , , , -5], //trot (alt)
-        [, , , , 0], //legs together
+        [-1, 0, 0, 2, -2, 4.5, 1, 1, 1], //stand
+        [, , , , -1.5, 4.3], //alt stand
+        [-3, 1.6, 2, 2, -2],
+        [-2, 0.5, -4, 3, -6, 2], //spread
+        [-2, 0.5, -4, 2, -6, 1], //spread (alt)
+        [-2, 0, 2, 3, -4, 1], //land
+        [-2, 1, , , -1], //trot
+        [-2, , , , -5], //trot (alt)
+        [-2, , , , 0], //legs together
         [-2, 1, , -1], //deny
       ],
     },
     {
-      text: "8RUMP○====>>",
+      text: "*RUMPO====>>",
       style: "limb b rear",
       layers: 1,
       pos: [
-        [-1, 0, -4, 0, -2.2, 4, 1, 1, 1], //stand
+        [-1, 0, 0, 2, -2.2, 4, 1, 1, 1], //stand
         [, , , , -2, 4.5], //alt stand
-        [-3, 2, -5, 4, -1], //rear
-        [-2, 0, , 4, -6, 3], //spread
-        [-2, 0, , 4, -6, 1], //spread (alt)
-        [-2, 0, , 5, -6, -0.5], //land
-        [, , , , -5], //trot
-        [, , , , -1], //trot (alt)
+        [-3, 1.6, 2, 2, -2], //rear
+        [-2, 0.5, -4, 2, -6, 1], //spread
+        [-2, 0.5, -4, 3, -6, 2], //spread (alt)
+        [-2, 0, 2.5, 3, -4, 2], //land
+        [-2, 1, , , -5], //trot
+        [-2, , , , -1], //trot (alt)
         [, , , , 0], //legs together
-        [-2, 1, , -1], //deny
+        [-2, 1, 1, 1], //deny
       ],
     },
     {
@@ -74,7 +74,7 @@ const uni = {
       style: "limb f front",
       layers: 1,
       pos: [
-        [2, 0, 4, 3, 2, 4, 1, 1, 1], //stand
+        [2, 0, 4, 3, 2, 4, 2, 1.5, 1], //stand
         [, , 3, , , 4.5], //stand alt
         [, , , -2, 4, 2], //rear
         [, , , 0, 6, 1], //spread
@@ -91,7 +91,7 @@ const uni = {
       style: "limb b front",
       layers: 1,
       pos: [
-        [2, 0, 3, 3, 2, 4.5, 1, 1, 1], //stand
+        [2, 0, 3, 3, 2, 4.5, 2, 1.5, 1], //stand
         [, , 4, , , 4], //stand alt
         [, , , -2, 4, 2], //rear
         [, , , 0, 6, 2], //spread

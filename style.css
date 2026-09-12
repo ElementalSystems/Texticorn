@@ -355,6 +355,9 @@ pre {
   --zHeight: 0.5rem;
 
   .limb {
+    &.rear {
+      font-size: 2rem;
+    }
     &.f {
       transform: translateZ(0.5rem);
     }
@@ -379,8 +382,8 @@ pre {
   }
   .tail {
     color: #000;
-    --dct: #fff8;
-    font-weight: lighter;
+    --dct: #fff2;
+    font-weight: bold;
     font-size: 1rem;
   }
 }
@@ -391,7 +394,7 @@ pre {
   font-weight: bold;
   --dct: #fff2;
   .c {
-    color: #0005;
+    color: #000a;
     font-size: 0.7rem;
   }
 }

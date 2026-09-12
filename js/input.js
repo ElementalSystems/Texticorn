@@ -140,7 +140,7 @@ mkCtls = (par, endLevel) => {
           }
         }
       });
-      if (!dc && maxt > this.wasDownTime) this.buts[maxi].wasDown = true; //if nothing is currently down look at the last one
+      if (!dc && maxt > this.wasDownTime + 100) this.buts[maxi].wasDown = true; //if nothing is currently down look at the last one
       this.wasDownTime = Date.now();
     },
 
