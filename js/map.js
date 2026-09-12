@@ -108,7 +108,7 @@ const mkMap = (lev, ctls, parentEl, layers = 5) => {
 };
 
 const mkWalls = (map, text) => {
-  const lines = text.replace(/[\^($@#]/g, "─").split("\n");
+  const lines = text.replace(/[\^($@#V]/g, "─").split("\n");
   const numCols = Math.max(...lines.map((l) => l.length));
   const w = [];
 

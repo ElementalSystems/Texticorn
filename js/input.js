@@ -229,19 +229,22 @@ mkCtls = (par, endLevel) => {
       pChimes();
       endLevel();
     },
-    end() {
+    end(isFinal = false) {
       //freeze and unzoom the camera
       if (this.przCount >= 3) {
         if (this.time < levs[this.cli].time1) this.przCount += 1;
         if (this.time < levs[this.cli].time2) this.przCount += 1;
       }
       this.status = 2; //done
+      this.isFinal = isFinal;
       this.timerOn = false;
       this.updateTB();
       this.topbar.classList.toggle("closed", false);
       this.base.classList.toggle("disable", true);
-      this.map.lookAt(this.map.follow.gx, this.map.follow.gy + 2);
-      this.map.setVPW(6);
+      if (!isFinal) {
+        this.map.lookAt(this.map.follow.gx, this.map.follow.gy + 2);
+        this.map.setVPW(6);
+      }
       if (this.przCount >= 3) {
         if ((loc[this.cli + "t"] ?? 10000) > this.time)
           loc[this.cli + "t"] = this.time;

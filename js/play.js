@@ -2,7 +2,6 @@
 /*
  * Last Shit:
  * * Princess (3)
- * * de corn
  *
  * Maps
  *
@@ -12,8 +11,8 @@
 
 async function start() {
   buildScreen();
-  //play(4);
-  //showSprite(uni, "fd fd fx");
+  //play(5);
+  //showSprite(vgn, "f");
 }
 
 function play(li) {
@@ -35,10 +34,10 @@ async function showSprite(config, mn) {
   );
   //addGridDisplay(map);
   //map.base.style.setProperty("--viewS", 0.75);
-  map.setVPW(4);
+  map.setVPW(6);
 
-  map.setCamera(8, 1, 0);
-  config.bits[0].pos.forEach((_, i) => addSprite(config, map, i + 1, 1, 0, i));
+  map.setCamera(3, 3, 0);
+  config.bits[0].pos.forEach((_, i) => addSprite(config, map, i + 1, 2, 0, i));
   if (mn) {
     let t = addSprite(config, map);
     while (true) {

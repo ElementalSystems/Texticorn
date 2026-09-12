@@ -140,7 +140,7 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
     if (ctl.status == 2) {
       //level ended
       active = false;
-      return "x";
+      return ctl.isFinal ? "xf" : "x";
     }
     if (!ctl.timerOn) return "p";
     if (flp(s, 0, 0) && sol(s, 1, 1)) return "f"; //can always flip from a bridge into rock
@@ -224,7 +224,7 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
     //lets change momentum.
     if (["fd", "ru", "rd", "jf"].includes(m)) mom = clamp(0, 5, mom + 1);
     if (["u2", "d3", "f"].includes(m)) mom = clamp(0, 5, mom - 1);
-    if (["i", "tb", "ux", "dx", "fx", "x"].includes(m)) mom = 0;
+    if (["i", "tb", "ux", "dx", "fx", "x", "xf"].includes(m)) mom = 0;
 
     //set the timescale
     s.moveTF = 1 - (0.6 * mom) / 5;
@@ -235,14 +235,14 @@ const addUni = (map, ctl, gx = 0, gy = 0, rz = 0, is = 0) => {
   return uniE;
 };
 
-addNBSprite = (c, map, x, y, rz, cb) => {
+addNBSprite = (c, map, x, y, rz, cb, r = 0.5) => {
   let is = 0;
   return addSprite(c, map, x, y, rz, 0, (sp) => {
     if (is < 0) return null;
     //check if we're near by
     if (map.follow) {
       let dist = Math.hypot(x - map.follow.gx, y - map.follow.gy);
-      if (dist < 0.5 && map.follow.rz % 4 == rz) {
+      if (dist < r && map.follow.rz % 4 == rz) {
         is = -1;
         cb?.();
         return "f";
@@ -265,11 +265,25 @@ addExt = (map, ctl, x, y, rz) =>
     ctl.end();
   });
 
+addVgn = (map, ctl, x, y, rz) =>
+  addNBSprite(
+    vgn,
+    map,
+    x,
+    y,
+    rz,
+    () => {
+      ctl.end(true);
+    },
+    2,
+  );
+
 const spriteFromCode = (c, map, ctl, x = 0, y = 0, rz = 0) =>
   ({
     "@": () => addUni(map, ctl, x, y, rz),
     "#": () => addPrz(map, ctl, x, y, rz), //Makes a prz that does the idle motion
     $: () => addPrz(map, ctl, x, y, rz), //Makes a prz that does the idle motion
     "^": () => addExt(map, ctl, x, y, rz, 0), //Makes an exit that does the idle motion
+    V: () => addVgn(map, ctl, x, y, rz, 0), //Makes an exit that does the idle motion
     "(": () => addSprite(brg, map, x, y, rz, 0, () => "i"), //Makes an exit that does the idle motion
   })[c]?.();

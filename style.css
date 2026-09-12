@@ -399,6 +399,14 @@ pre {
   }
 }
 
+.vgn {
+  --zHeight: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+  --dct: #0008;
+}
+
 .ext {
   --zHeight: 0.5rem;
   font-size: 2.5rem;
