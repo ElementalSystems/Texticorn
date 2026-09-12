@@ -1,7 +1,6 @@
 //TODO: The List
 /*
  * Last Shit:
- * * Princess (3)
  *
  * Maps
  *
